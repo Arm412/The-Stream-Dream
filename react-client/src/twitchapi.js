@@ -55,12 +55,3 @@ const getTopGames = (url, accessToken, callback) => {
         console.log(JSON.parse(body));
     });
 }
-
-const testConsole = () => {
-    console.log(result);
-}
-
-exports.setNewToken = setNewToken;
-exports.getToken = getToken;
-exports.getGames = getTopGames;
-exports.test = testConsole;
