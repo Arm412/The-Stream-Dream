@@ -1,18 +1,16 @@
-require('./App.css');
-const twitch = require('./twitchapi');
+import Header from './components/Header'
+import Button from './components/Button'
 
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={"twitchlogo.png"} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <button type="button" onClick={twitch.test}>Acquire new access token</button>
-      </header>
+    <div className='container'>
+      <Header />
+      <div className='btnContainer'>
+        <Button btnName='Find Twitch User'/>
+        <Button btnName='View Top Twitch Games'/>
+      </div>
     </div>
-  );
+  )
 }
 
 export default App;
