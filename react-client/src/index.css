@@ -1,17 +1,11 @@
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
+body {
+  font-family: 'Poppins', sans-serif;
   background-color: #262626
 }
 
-body {
-  font-family: 'Poppins', sans-serif;
-}
-
 .container {
-  overflow: auto;
-  min-height: 300px;
+  height: auto;
+  width: 100%;
   color: #f1f1f1
 }
 
@@ -48,6 +42,10 @@ body {
   align-items: center;
 }
 
+.hidden {
+  display: none;
+}
+
 .btn:focus {
   outline: none;
 }
@@ -61,59 +59,70 @@ body {
   width: 100%;
 }
 
-.task {
-  background: #f4f4f4;
-  margin: 5px;
-  padding: 10px 20px;
-  cursor: pointer;
-}
-
-.task.reminder {
-  border-left: 5px solid green;
-}
-
-.task h3 {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.add-form {
-  margin-bottom: 40px;
-}
-
-.form-control {
-  margin: 20px 0;
-}
-
-.form-control label {
-  display: block;
-}
-
-.form-control input {
-  width: 100%;
-  height: 40px;
-  margin: 5px;
-  padding: 3px 7px;
-  font-size: 17px;
-}
-
-.form-control-check {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.form-control-check label {
-  flex: 1;
-}
-
-.form-control-check input {
-  flex: 2;
-  height: 20px;
-}
-
 footer {
   margin-top: 30px;
   text-align: center;
+}
+
+.loader-div {
+  height: 50vh;
+  padding-left: calc((50%) - 76px);
+  padding-top: 10%;
+  justify-content: center;
+  align-items: center;
+}
+
+.loader {
+  width: 120px;
+  height: 120px;
+  border: 16px solid #f1f1f1;
+  border-radius: 50%;
+  border-top: 16px solid #6441a5;
+  -webkit-animation: spin 2s linear infinite; /* Safari */
+  animation: spin 2s linear infinite;
+}
+
+@-webkit-keyframes spin {
+  0% { -webkit-transform: rotate(0deg); }
+  100% { -webkit-transform: rotate(360deg); }
+}
+
+@keyframes spin {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.twitch-list {
+  width: 75%;
+  height: auto;
+  display: flex;
+  font-family: Tahoma, sans-serif;
+  padding-bottom: 10px;
+}
+
+.twitch-list div {
+  text-align: center;
+  background-color: #6441a5;
+}
+
+.game-rank {
+  border-style: solid solid solid solid;
+  flex: 20%;
+}
+
+.game-name {
+  border-style: solid solid solid hidden;
+  flex: 30%;
+}
+
+.game-id {
+  border-style: solid solid solid hidden;
+  flex: 20%
+}
+
+.game-image {
+  padding-top: 10px;
+  padding-bottom: 10px;
+  border-style: solid solid solid hidden;
+  flex: 30%;
 }

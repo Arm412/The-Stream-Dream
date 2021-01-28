@@ -1,16 +1,23 @@
-import Header from './components/Header'
-import Button from './components/Button'
+import TopGames from './components/TopGames'
+import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
+import Home from './components/Home';
 
 function App() {
+
   return (
-    <div className='container'>
-      <Header />
-      <div className='btnContainer'>
-        <Button btnName='Find Twitch User'/>
-        <Button btnName='View Top Twitch Games'/>
+    <Router>
+      <div className='container'>
+        <Switch>
+          <Route exact path='/'>
+            <Home headerTitle='Welcome to Twitch Statistics!'/>
+          </Route>
+          <Route path='/getGames'>
+            <TopGames headerTitle='Top Viewed Games on Twitch Currently'/>
+          </Route>
+        </Switch>
       </div>
-    </div>
-  )
+    </Router>
+  );
 }
 
 export default App;

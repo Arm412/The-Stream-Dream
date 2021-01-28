@@ -1,57 +1,83 @@
-const result = require('dotenv').config();
+require('dotenv').config({path: '../.env'});
 const request = require('request');
 
-let AT = '';
+let AT = process.env.ACCESS_TOKEN;
 
-const requestToken = (url, callback) => {
-
-    const options = {
-        url: process.env.GET_TOKEN,
-        json:true,
-        body:{
-            client_id: process.env.CLIENT_ID,
-            client_secret: process.env.CLIENT_SECRET,
-            grant_type: 'client_credentials'
-        }
-    };
-
-    request.post(options, (err, res, body) => {
-        if (err) {
-            return console.log(err);
-        }
-        console.log('Status: ' + res.statusCode);
-        console.log(body);
-
-        callback(res);
+const requestToken = (url) => {
+    return new Promise((resolve, reject) => {
+        // Set API options
+        const options = {
+            url: process.env.GET_TOKEN,
+            json:true,
+            body:{
+                client_id: process.env.CLIENT_ID,
+                client_secret: process.env.CLIENT_SECRET,
+                grant_type: 'client_credentials'
+            }
+        };
+    
+        request.post(options, (err, res, body) => {
+            if (err) {
+                return console.log(err);
+            }
+            console.log('Status: ' + res.statusCode);
+            console.log(body);
+    
+            if (res.statusCode == 200) {
+                resolve(res.body.access_token);
+            } else {
+                reject(res.statusCode);
+            }
+        });
     });
 };
 
-const setNewToken = () => {
-    console.log("URL: " + process.env.GET_TOKEN);
-    requestToken(process.env.GET_TOKEN, (res) => {
-        AT = res.body.access_token;
+const getTopTwitchGames = (accessToken) => {
+    return new Promise ((resolve, reject) => {
+        const gameOptions = {
+            url: process.env.GET_GAMES,
+            method: 'GET',
+            headers: {
+                'Client-ID': process.env.CLIENT_ID,
+                'Authorization': 'Bearer ' + accessToken
+            }
+        };
+        console.log("Calling Twitch Games API.")
+        request.get(gameOptions, (err, res, body) => {
+            if(err) {
+                reject(err);
+            } else {
+                if (res.statusCode != 200) {
+                    console.log('Status: ' + res.statusCode);
+                    reject(body);
+                }
+                console.log('Success');
+                resolve(body);
+            }
+        });
     });
-};
-
-const getToken = () => {
-    console.log("Access Token: " + AT);
 }
 
-const getTopGames = (url, accessToken, callback) => {
-    const gameOptions = {
-        url: url,
-        method: 'GET',
-        headers: {
-            'client-ID': process.env.CLIENT_ID,
-            'Authorization': 'Bearer ' + accessToken
-        }
-    };
+// Request Top game data from the Twitch API
+exports.getTopGames = async (req, res) => {
+    let AT = process.env.ACCESS_TOKEN || '';
+    console.log("Access Token: " + process.env.GET_TOKEN);
+    if (AT === '') {
+        console.log("Getting token");
+        await requestToken(process.env.GET_TOKEN).then((res) => {
+            console.log("In Resolved Promise");
+            AT = res;
+        }).catch((code)=> {
+            console.log("Failed with return code: " + code);
+        });
+    }
 
-    request.get(gameOptions, (err, res, body) => {
-        if(err) {
-            console.log(err);
-        }
-        console.log('Status: ' + res.statusCode);
-        console.log(JSON.parse(body));
+    // Get top games on twitch currently
+    await getTopTwitchGames(AT).then( (message) => {
+        console.log("In Resolve");
+        res.json(message);
+    }).catch((message) => {
+        console.log("Rejected Promise: " + message);
+        res.send("Error: " + message);
     });
 }
