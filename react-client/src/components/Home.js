@@ -5,7 +5,6 @@ import { Link } from 'react-router-dom';
 
 const Home = (props) => {
   const [buttonsHidden, setButtonsHidden] = useState(false);
-  const [viewTopGames, setViewTopGames] = useState(false);
   const btnDivRef = useRef();
 
   useEffect(() => {
@@ -18,8 +17,7 @@ const Home = (props) => {
       fetch('http://localhost:3001/getGames').then(
         response => response.json()
       ).then(
-        jsondata => console.log(jsondata),
-        setViewTopGames(true)
+        jsondata => console.log(jsondata)
       );
     });
   };
