@@ -9,7 +9,7 @@ function App() {
     <Router>
       <div className='container'>
         <Navbar bg='primary'>
-          <Navbar.Brand href='#home'>TS</Navbar.Brand>
+          <Navbar.Brand href='/'>TS</Navbar.Brand>
         </Navbar>
         <Switch>
           <Route exact path='/'>
