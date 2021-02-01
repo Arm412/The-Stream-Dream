@@ -1,0 +1,12 @@
+// Overwrite theme variables
+$theme-colors: (
+  'primary': #6441a5,
+  'secondary': #b9a3e3,
+  'dark': #262626,
+  'light': white,
+  'success': green,
+  'info': #f1f1f1,
+  'warning': crimson,
+);
+
+@import '~bootstrap/scss/bootstrap';

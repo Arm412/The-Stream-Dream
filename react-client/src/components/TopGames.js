@@ -1,10 +1,10 @@
 import React, {useState, useEffect, useRef} from 'react';
 import Loader from './Loader';
 import ViewList from './ViewList';
+import Carousel from 'react-bootstrap/Carousel';
 
 const TopGames = () => {
   const [dataLoaded, setDataLoaded] = useState(false);
-  const [display, setDisplay] = useState(false);
   let topGamesJSON = useRef(null);
   let Games = useRef([]);
   let rank = 0;
@@ -58,17 +58,19 @@ const TopGames = () => {
   }
 
   return (
-    <>
+    <div className='carousel-wrapper'>
       {!dataLoaded ? <Loader></Loader> : null}
       {dataLoaded ? 
-        <div>
+        <Carousel>
           {Games.current.map(game => (
-            <ViewList rank={++rank} gameData={game}></ViewList>
+            <Carousel.Item className='text-info'>
+              <ViewList rank={++rank} gameData={game}></ViewList>
+            </Carousel.Item>
           ))}
-        </div>
+        </Carousel>
         : null
           }
-    </>
+    </div>
   )
 }
 
