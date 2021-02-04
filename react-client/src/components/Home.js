@@ -9,7 +9,9 @@ const Home = (props) => {
     <>
       <Header title={props.headerTitle}/>
       <div className='btnContainer'>
-        <Button btnName='Find Twitch User' />
+        <Link to='/getUser'>
+          <Button btnName='Search for Twitch Channel' />
+        </Link>
         <Link to='/getGames'>
           <Button btnName='View Top Twitch Games'/>
         </Link>

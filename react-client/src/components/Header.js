@@ -1,5 +1,4 @@
 import PropTypes from 'prop-types';
-import Button from './Button';
 
 const Header = (props) => {
     return (
@@ -10,7 +9,7 @@ const Header = (props) => {
 }
 
 Header.defaultProps = {
-    title: 'Welcome to Twitch Statistics!',
+    title: 'Welcome!',
 }
 
 Header.propTypes = {

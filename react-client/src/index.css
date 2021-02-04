@@ -6,7 +6,7 @@ body {
 .container {
   height: auto;
   width: 100%;
-  color: #262626
+  color: white
 }
 
 .header {
@@ -147,4 +147,9 @@ footer {
   margin-top: 9vh;
   margin-left: calc(5vw + 180px);
   border-style: solid;
+  margin-right: 2vw;
+}
+
+.carousel a:hover {
+  background-color: #b9a3e3;
 }

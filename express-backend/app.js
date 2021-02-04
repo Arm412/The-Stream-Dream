@@ -5,7 +5,8 @@ require('dotenv').config();
 
 app.use(cors());
 
-app.get('/getGames', require('./routes/gameRoutes'));
+app.get('/getGames', require('./routes/twitchRoutes'));
+app.get('/findChannels', require('./routes/twitchRoutes'));
 
 app.use((req, res, next) => {
     res.header('Access-Control-Allow-Origin', 'http://localhost:3000/');

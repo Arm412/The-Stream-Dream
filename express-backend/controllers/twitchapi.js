@@ -81,3 +81,56 @@ exports.getTopGames = async (req, res) => {
         res.send("Error: " + message);
     });
 }
+
+const findChannel = (accessToken, user) => {
+    console.log("User searching for: " + user);
+    console.log(process.env.SEARCH_CHANNELS);
+    console.log(process.env.SEARCH_CHANNELS + '?query=' + user);
+    return new Promise ((resolve, reject) => {
+        const channelOptions = {
+            url: process.env.SEARCH_CHANNELS + '?query=' + user,
+            method: 'GET',
+            headers: {
+                'Client-ID': process.env.CLIENT_ID,
+                'Authorization': 'Bearer ' + accessToken
+            }
+        };
+        console.log("Searching Users")
+        request.get(channelOptions, (err, res, body) => {
+            if(err) {
+                reject(err);
+            } else {
+                if (res.statusCode != 200) {
+                    console.log('Status: ' + res.statusCode);
+                    reject(body);
+                }
+                console.log('Success');
+                resolve(body);
+            }
+        });
+    });
+}
+
+exports.findChannels = async (req, res) => {
+    let AT = process.env.ACCESS_TOKEN || '';
+    console.log("Access Token: " + process.env.GET_TOKEN);
+    if (AT === '') {
+        console.log("Getting token");
+        await requestToken(process.env.GET_TOKEN).then((res) => {
+            console.log("In Resolved Promise");
+            AT = res;
+        }).catch((code)=> {
+            console.log("Failed with return code: " + code);
+        });
+    }
+
+    // Get requested user from Twitch API
+    const requestedUser = req.query.user;
+    console.log(requestedUser);
+    await findChannel(AT, requestedUser).then((message) => {
+        console.log("Resolved");
+        res.json(message);
+    }).catch((message) => {
+        console.log(message);
+    })
+}
