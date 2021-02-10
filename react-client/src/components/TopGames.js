@@ -5,15 +5,14 @@ import Carousel from 'react-bootstrap/Carousel';
 
 const TopGames = () => {
   const [dataLoaded, setDataLoaded] = useState(false);
-  let topGamesJSON = useRef(null);
-  let Games = useRef([]);
+  const Games = useRef([]);
   let rank = 0;
 
   useEffect(() => {
     getTopGames().then((twitchData) => {
       console.log('Fetch Resolved...');
-      topGamesJSON.current = JSON.parse(twitchData);
-      Games.current = updateArray(topGamesJSON.current.data);
+      const parsedData = JSON.parse(twitchData);
+      Games.current = updateArray(parsedData.data);
       setDataLoaded(true);
     }).catch((message) => {
       console.log(message)
