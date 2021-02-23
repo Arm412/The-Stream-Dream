@@ -1,9 +1,8 @@
 import React, {useState, useEffect, useRef} from 'react';
-import Button from './Button';
 import Loader from './Loader';
 import ChannelItem from './ChannelItem';
 import Modal from 'react-bootstrap/Modal';
-import ModalDialog from 'react-bootstrap/esm/ModalDialog';
+import Languages from '../helpers/languages.json';
 
 const FindChannels = (props) => {
   const [channelName, setChannelName] = useState('');
@@ -41,9 +40,13 @@ const FindChannels = (props) => {
     <>
       <div className='input-div'>
         <form>
-          <input value={channelName} className="form-control form-control-lg" id='channelName' placeholder='Input Twitch Channel Name' onChange={e => setChannelName(e.target.value)}/>
+          <input value={channelName} 
+          className="form-control form-control-lg" 
+          id='channelName' 
+          placeholder='Input Twitch Channel Name' 
+          onChange={e => setChannelName(e.target.value)}/>
         </form>
-        <Button onClick={() => {setLoading(true)}} />
+        <button onClick={() => {setLoading(true)}} />
       </div>
       {(!loading && channelArray.current.length !== 0) ? 
       <div className='channel-container' ref={channelList}>
@@ -63,6 +66,7 @@ const FindChannels = (props) => {
         <Modal.Body>
           <p>Status: {chosenChannel.current.is_live ? 'Live' : 'Offline'}</p>
           <p>Title: {chosenChannel.current.title}</p>
+          <p>Language: {Languages[chosenChannel.current.broadcaster_language]}</p>
           <a href={'https://www.twitch.tv/'+chosenChannel.current.display_name}>Visit the channel</a>
         </Modal.Body>
       </Modal>

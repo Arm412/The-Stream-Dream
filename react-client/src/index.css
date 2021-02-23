@@ -1,46 +1,123 @@
-body {
+html, body {
   font-family: 'Poppins', sans-serif;
-  background-color: #262626;
+  background-color: #121212;
+  color: #03DAC5;
+  margin: 0;
+  padding: 0;
 }
 
-.container {
-  height: auto;
+h1, h2, h3, h4, h5 {
+  /*color: #BB86FC;*/
+  color: white;
+}
+
+h1 {
+  font-size: 5rem;
+}
+
+footer {
+  margin-top: 30px;
+  text-align: center;
+}
+
+a {
+  color: inherit;
+  margin: 0;
+}
+
+a:hover {
+  text-decoration: none;
+  color: inherit;
+}
+
+p {
+  font-size: 1.25rem;
+}
+
+.home-img {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  height: 100%;
   width: 100%;
-  color: white
+  background-image: url('./Images/streamsetup.jpeg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+  
+}
+
+.home-img-cover {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 1;
+  background-color: #121212;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  min-height: 100vh;
+  height: 100%;
+  width: 100%;
+  animation: 3s forwards revealBackground;
+}
+
+.home-div {
+  position: relative;
+  min-height: 100vh;
+  max-height: 100vh;
+  overflow-y: scroll;
+  width: 100%;
+  z-index: 1;
 }
 
 .header {
+  position: relative;
+  z-index: 1;
   align-items: center;
-  margin: 100px 0;
+  padding: 100px 0;
   text-align: center;
   font-size: 2rem;
   color: white;
 }
 
-.btn {
-  display:table-cell;
-  background: #6441a5;
-  color: #fff;
-  border-color: #b9a3e3;
-  padding: 10px 20px;
-  margin: 10px;
-  border-radius: 5px;
-  cursor: pointer;
-  text-decoration: none;
-  font-size: 15px;
-  font-family: inherit;
-  min-height: 8em;
-  min-width: 225px;
-  max-width: 225px;
-  flex: 1;
+.btn-div {
+  position: relative;
+  z-index: 2;
+  background-color: #3700B3;
+  color: white;
   width: auto;
+  padding: 10px 20px;
+  margin: 0 10px;
+  text-align: center;
+  border-radius: 25px;
+  text-decoration: none;
+  font-size: 1rem;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  transition: .25s;
 }
 
-.btnContainer {
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.login-twitch-btn {
+  position: relative;
+  display: inline-block;
+  z-index: 2;
+  background-color: #3700B3;
+  color: white;
+  padding: 10px 20px;
+  margin-left: calc(50vw - 89px);
+  border-radius: 25px;
+  font-size: 1rem;
+  font-family: Arial, Helvetica, sans-serif;
+  font-weight: bold;
+  transition: .25s;
+}
+
+.btn-div:hover, .login-twitch-btn:hover {
+  background-color: #6200EE;
+  color: white;
+  cursor: pointer;
 }
 
 .hidden {
@@ -54,15 +131,50 @@ body {
 .btn:active {
   transform: scale(0.98);
 }
-
 .btn-block {
   display: block;
   width: 100%;
 }
 
-footer {
-  margin-top: 30px;
-  text-align: center;
+.holder-div {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  position: absolute;
+  bottom: 0;
+  height: 35vh;
+  width: 100%;
+}
+
+.holder-div > div {
+  background-color: rgba(12, 12, 12, .60);
+  flex: 1;
+  margin: 10px;
+  padding: 30px 30px 10px 30px;
+  display: flex;
+  flex-direction: column;
+  min-width: 250px;
+  max-width: 400px;
+}
+
+.holder-div > div:hover {
+  animation: .25s forwards focusHomeDiv;
+}
+
+.card-flex {
+  display: flex;
+}
+
+.card-header-div, .card-header-btn {
+  flex: 1;
+}
+
+.card-body-div {
+  flex: 2;
+}
+
+.center-div {
+  padding-left: 50%;
 }
 
 .loader-div {
@@ -84,6 +196,24 @@ footer {
   animation: spin 2s linear infinite;
 }
 
+@keyframes revealBackground {
+  0% {
+    opacity: 100%;
+  }
+  100% {
+    opacity: 60%;
+  }
+}
+
+@keyframes focusHomeDiv {
+  0% {
+    background-color: rgba(12, 12, 12, .60);
+  }
+  100% {
+    background-color: rgba(12, 12, 12, 1);
+  }
+}
+
 @-webkit-keyframes spin {
   0% { -webkit-transform: rotate(0deg); }
   100% { -webkit-transform: rotate(360deg); }
@@ -93,6 +223,9 @@ footer {
   0% { transform: rotate(0deg); }
   100% { transform: rotate(360deg); }
 }
+
+
+/* Top Twitch Games CSS */
 
 .twitch-list {
   width: 100%;
@@ -131,12 +264,6 @@ footer {
   flex: 20%
 }
 
-.carousel-wrapper {
-  background-color: #6441a5;
-  margin-top: 5vh;
-  min-height: 400px;
-}
-
 .game-image {
   float: left;
   padding-top: 10vh;
@@ -150,9 +277,18 @@ footer {
   margin-right: 2vw;
 }
 
+.carousel-wrapper {
+  background-color: #6441a5;
+  margin-top: 5vh;
+  min-height: 400px;
+}
+
 .carousel a:hover {
   background-color: #b9a3e3;
 }
+
+
+/* Find Channel CSS */
 
 .input-div {
   width: 300px;
@@ -184,4 +320,24 @@ footer {
 .center-text {
   text-align: center;
   padding-top: 30%;
+}
+
+.modal-body * {
+  font-size: 1.5em;
+}
+
+.nav-container {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 300px;
+  height: 100vh;
+  background-color: #121212;
+  color: #BB86FC;
+}
+
+.nav-header {
+  width: 100%;
+  height: 4rem;
+  background-color: grey;
 }
