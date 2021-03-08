@@ -38,7 +38,7 @@ p {
   position: absolute;
   top: 0;
   left: 0;
-  z-index: 1;
+  z-index: 0;
   height: 100%;
   width: 100%;
   background-image: url('./Images/streamsetup.jpeg');
@@ -53,7 +53,7 @@ p {
   position: absolute;
   top: 0;
   left: 0;
-  z-index: 1;
+  z-index: 0;
   background-color: #121212;
   background-repeat: no-repeat;
   background-attachment: fixed;
@@ -67,16 +67,46 @@ p {
   position: relative;
   min-height: 100vh;
   max-height: 100vh;
-  overflow-y: scroll;
+  overflow-y: auto;
   width: 100%;
+  z-index: 2;
+}
+
+.static-login-div {
+  position: absolute;
+  top: 25px;
+  right: 25px;
   z-index: 1;
+  width: 50px;
+  height: 50px;
+  align-items: center;
+  
+  
+}
+
+.static-login-div img {
+  max-width: 50px;
+  max-height: 50px;
+}
+
+.welcome-div {
+  height: 65vh;
+  min-height: 350px;
+}
+
+.welcome-div img {
+  height: 150px;
+  width: 150px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
 }
 
 .header {
   position: relative;
-  z-index: 1;
+  z-index: 2;
   align-items: center;
-  padding: 100px 0;
+  padding: 10vh 0;
   text-align: center;
   font-size: 2rem;
   color: white;

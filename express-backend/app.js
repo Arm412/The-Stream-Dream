@@ -11,7 +11,8 @@ app.use(cookieParser());
 app.get('/getGames', require('./routes/twitchRoutes'));
 app.get('/findChannels', require('./routes/twitchRoutes'));
 app.get('/login', require('./routes/twitchRoutes'));
-app.post('/setUserToken', require('./routes/twitchRoutes'));
+app.post('/getUserProfileData', require('./routes/twitchRoutes'));
+
 
 app.use((req, res) => {
     res.header('Access-Control-Allow-Origin', 'http://localhost:3000/');

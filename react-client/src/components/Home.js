@@ -1,28 +1,37 @@
 import Header from './Header';
-import React, {useState, useEffect, useRef} from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import React, {useState, useEffect, useRef } from 'react';
 import HomeCard from './HomeCard';
 import Login from './Login';
-import Cookies from 'universal-cookie';
 import axios from 'axios';
-const cookies = new Cookies();
+import { useSelector, useDispatch } from 'react-redux';
+import { login, logout} from '../helpers/redux/actions/userLoggedActions';
+
 axios.defaults.withCredentials = true;
 
 const Home = (props) => {
+  const loggedIn = useSelector(state => state.isLogged);
   const TopGamesCardBody = 'View the top 20 games currently being streamed on Twitch';
   const SearchChannelBody = 'Search for a Twitch Channel and view it\'s channel information and captures.'
+  const dispatch = useDispatch();
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
     if (urlParams.get('code')) {
-      axios.post('http://localhost:3001/setUserToken', {
-        userToken: urlParams.get('code')
-      }).then(message => {
-        console.log(message);
+      axios.post('http://localhost:3001/getUserProfileData', {
+        userCode: urlParams.get('code')
+      }).then(res => {
+        localStorage.setItem('userTwitchName', res.data.display_name);
+        localStorage.setItem('twitchUserImg', res.data.profile_image_url);
+        if (!loggedIn) {
+          dispatch(login());
+        }
       }).catch(e => {
-      console.log("Post failed: " + e);
+        console.log("Post failed: " + e);
       });
     } else {
+      if (loggedIn) {
+        dispatch(logout());
+      }
       console.log("No URL params");
     }
   }, []);
@@ -33,8 +42,10 @@ const Home = (props) => {
       <div className='home-img'></div>
       <div className='home-img-cover'></div>
       <div className='home-div'>
-        <Header title={props.headerTitle}/>
-        <Login />
+        <div className='welcome-div'>
+        {loggedIn ? <Header title={'Welcome, ' + localStorage.userTwitchName} /> : <Header title='Welcome!'/>}
+        {!loggedIn ? <Login /> : <img alt={localStorage.userTwitchName} src={localStorage.twitchUserImg}></img>}
+        </div>
         <div className='holder-div'>
           <div></div>
           <HomeCard 

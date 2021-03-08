@@ -13,12 +13,3 @@ exports.authorizeLogin = async (req, res) => {
   });
   res.redirect(process.env.AUTHORIZE_USER_ENDPOINT + '?' + query);
 }
-
-exports.setUserToken = async (req, res) => {
-  res.status(202)
-  .cookie('userToken', req.body.userToken, {
-    sameSite: 'strict',
-    path: '/',
-    httpOnly: true
-    }).send('cookie set');
-}
