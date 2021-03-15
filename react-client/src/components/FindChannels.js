@@ -13,7 +13,7 @@ const FindChannels = (props) => {
   const chosenChannel = useRef('');
 
   const queryChannels = () => {
-    fetch('http://localhost:3001/findChannels?user=' + channelName).then(
+    fetch('http://localhost:3001/twitch/findChannels?user=' + channelName).then(
       response => response.json()
     ).then( (jsondata) => {
       console.log(JSON.parse(jsondata));

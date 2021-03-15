@@ -21,7 +21,7 @@ const TopGames = () => {
 
   const getTopGames = async () => {
     return new Promise ((resolve, reject) => {
-      fetch('http://localhost:3001/getGames').then(
+      fetch('http://localhost:3001/twitch/getGames').then(
         response => response.json()
       ).then(
         jsondata => resolve(jsondata)
