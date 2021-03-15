@@ -16,9 +16,11 @@ const Home = (props) => {
 
   useEffect(() => {
     const urlParams = new URLSearchParams(window.location.search);
-    if (urlParams.get('code')) {
-      axios.post('http://localhost:3001/getUserProfileData', {
-        userCode: urlParams.get('code')
+    console.log("LoggedIn: " + loggedIn);
+    if (urlParams.get('code') && !loggedIn) {
+      axios.post('http://localhost:3001/twitch/profileData', {
+        userCode: urlParams.get('code'),
+        withCredentials: true
       }).then(res => {
         localStorage.setItem('userTwitchName', res.data.display_name);
         localStorage.setItem('twitchUserImg', res.data.profile_image_url);
@@ -29,10 +31,7 @@ const Home = (props) => {
         console.log("Post failed: " + e);
       });
     } else {
-      if (loggedIn) {
-        dispatch(logout());
-      }
-      console.log("No URL params");
+      console.log("User is Logged In");
     }
   }, []);
 

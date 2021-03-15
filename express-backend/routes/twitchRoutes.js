@@ -9,6 +9,6 @@ router.get('/findChannels', twitchAPI.findChannels);
 
 router.get('/login', login.authorizeLogin);
 
-router.post('/getUserProfileData', twitchAPI.getUserProfileData);
+router.post('/profileData', twitchAPI.profileData);
 
 module.exports = router;

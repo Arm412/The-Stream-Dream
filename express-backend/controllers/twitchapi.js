@@ -173,7 +173,7 @@ exports.findChannels = async (req, res) => {
 		});
 };
 
-exports.getUserProfileData = async (req, res) => {
+exports.profileData = async (req, res) => {
 	let UserToken = "";
 	console.log(req.body.userCode);
 	await requestToken(process.env.GET_TOKEN, req.body.userCode)
