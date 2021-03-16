@@ -210,10 +210,8 @@ p {
 .loader-div {
   height: 50vh;
   padding-left: calc((50%) - 76px);
-  padding-top: 10%;
   justify-content: center;
   align-items: center;
-  background-color: #262626;
 }
 
 .loader {
@@ -221,7 +219,7 @@ p {
   height: 120px;
   border: 16px solid #f1f1f1;
   border-radius: 50%;
-  border-top: 16px solid #6441a5;
+  border-top: 16px solid #3700B3;
   -webkit-animation: spin 2s linear infinite; /* Safari */
   animation: spin 2s linear infinite;
 }

@@ -5,19 +5,32 @@ import './index.css';
 import App from './App.js';
 import reportWebVitals from './reportWebVitals';
 import { createStore } from 'redux';
+import { persistStore, persistReducer } from 'redux-persist';
+import { PersistGate } from 'redux-persist/integration/react'
+import storage from 'redux-persist/lib/storage';
 import allReducers from './helpers/redux/reducers/index';
 import { Provider } from 'react-redux';
 
+const persistConfig = {
+  key: 'root',
+  storage,
+}
+
+const persistedReducer = persistReducer(persistConfig, allReducers);
+ 
 const myStore = createStore(
-    allReducers,
-    window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
-  );
+  persistedReducer,
+  window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+);
+const persistor = persistStore(myStore)
 
 ReactDOM.render(
   <Provider store={myStore}>
-    <React.StrictMode>
-      <App />
-    </React.StrictMode>
+    <PersistGate loading={null} persistor={persistor}>
+      <React.StrictMode>
+        <App />
+      </React.StrictMode>
+    </PersistGate>
   </Provider>,
   document.getElementById('root')
 );

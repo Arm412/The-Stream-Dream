@@ -2,6 +2,7 @@ import React, {useState, useEffect, useRef} from 'react';
 import Loader from './Loader';
 import ViewList from './ViewList';
 import Carousel from 'react-bootstrap/Carousel';
+import axios from 'axios';
 
 const TopGames = () => {
   const [dataLoaded, setDataLoaded] = useState(false);
@@ -10,8 +11,7 @@ const TopGames = () => {
 
   useEffect(() => {
     getTopGames().then((twitchData) => {
-      console.log('Fetch Resolved...');
-      const parsedData = JSON.parse(twitchData);
+      const parsedData = JSON.parse(twitchData.data);
       Games.current = updateArray(parsedData.data);
       setDataLoaded(true);
     }).catch((message) => {
@@ -21,8 +21,10 @@ const TopGames = () => {
 
   const getTopGames = async () => {
     return new Promise ((resolve, reject) => {
-      fetch('http://localhost:3001/twitch/getGames').then(
-        response => response.json()
+      axios.get('http://localhost:3001/twitch/getGames', { withCredentials: true }).then(
+        (response) => {
+          resolve(response);
+        }
       ).then(
         jsondata => resolve(jsondata)
       ).catch((message) => {

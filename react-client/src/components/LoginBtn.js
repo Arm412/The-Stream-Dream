@@ -1,6 +1,6 @@
-import React from 'react'
+import React from 'react';
 
-const Login = () => {
+const LoginBtn = () => {
   return (
     <a href='http://localhost:3001/twitch/login'>
       <div className='login-twitch-btn'>
@@ -10,4 +10,4 @@ const Login = () => {
   )
 }
 
-export default Login
+export default LoginBtn

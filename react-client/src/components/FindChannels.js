@@ -3,6 +3,7 @@ import Loader from './Loader';
 import ChannelItem from './ChannelItem';
 import Modal from 'react-bootstrap/Modal';
 import Languages from '../helpers/languages.json';
+import axios from 'axios';
 
 const FindChannels = (props) => {
   const [channelName, setChannelName] = useState('');
@@ -13,11 +14,10 @@ const FindChannels = (props) => {
   const chosenChannel = useRef('');
 
   const queryChannels = () => {
-    fetch('http://localhost:3001/twitch/findChannels?user=' + channelName).then(
-      response => response.json()
-    ).then( (jsondata) => {
-      console.log(JSON.parse(jsondata));
-      channelArray.current = JSON.parse(jsondata)['data'];
+    axios.get('http://localhost:3001/twitch/findChannels?user=' + channelName, { withCredentials: true }).then(
+      (jsondata) => {
+      console.log(JSON.parse(jsondata.data));
+      channelArray.current = JSON.parse(jsondata.data).data;
       setLoading(false);
     }
     ).catch((message) => {

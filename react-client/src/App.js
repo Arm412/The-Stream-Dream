@@ -3,8 +3,8 @@ import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import Home from './components/Home';
 import FindChannels from './components/FindChannels';
 import Header from './components/Header';
-import Login from './components/Login';
 import ProfileDiv from './components/ProfileDiv';
+import LoggingInPage from './components/LoggingInPage';
 import { useSelector, useDispatch } from 'react-redux';
 
 function App() {
@@ -24,8 +24,7 @@ function App() {
           <FindChannels />
         </Route>
         <Route path='/login'>
-          <Header title='Log In with Twitch Channel' />
-          <Login />
+          <LoggingInPage />
         </Route>
       </Switch>
     </Router>
