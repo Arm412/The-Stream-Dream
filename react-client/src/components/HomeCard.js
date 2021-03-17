@@ -12,7 +12,7 @@ const HomeCard = (props) => {
           <p>&emsp; {props.cardBody}</p>
         </div>
         <div className='card-header-btn'>
-          <Link to={props.goToLink} className='home-btn'>
+          <Link to={props.goToLink}>
             <div className='btn-div'>
               <span>{props.buttonText}</span>
             </div>

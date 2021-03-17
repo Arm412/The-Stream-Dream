@@ -11,13 +11,13 @@ const ViewList = (props) => {
         </div>
         <div className='game-info'>
           <div >
-            {props.gameData == null ? <div>No Source</div> : <p>{props.rank}</p> }
+            {props.gameData == null ? <div>No Source</div> : <p>Rank: {props.rank}</p> }
           </div>
           <div >
-            {props.gameData == null ? <div>No Source</div> : <p>{props.gameData.name}</p> }
+            {props.gameData == null ? <div>No Source</div> : <p>Title: {props.gameData.name}</p> }
           </div>
           <div>
-            {props.gameData == null ? <div>No Source</div> : <p>{props.gameData.id}</p> }
+            {props.gameData == null ? <div>No Source</div> : <p>Game ID: {props.gameData.id}</p> }
           </div>
         </div>
       </div>

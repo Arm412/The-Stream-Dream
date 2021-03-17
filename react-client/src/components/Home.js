@@ -12,10 +12,15 @@ const Home = (props) => {
   const loggedIn = useSelector(state => state.isLogged);
   const TopGamesCardBody = 'View the top 20 games currently being streamed on Twitch';
   const SearchChannelBody = 'Search for a Twitch Channel and view it\'s channel information and captures.';
+  const dispatch = useDispatch();
 
   useEffect(() => {
-    axios.get('http://localhost:3001/', { withCredentials:true }).then((response) => {
-      console.log('Server Responded');
+    axios.get('http://localhost:3001/', { withCredentials:true }).then((newUser) => {
+      let newSession = newUser.data;
+      if (newSession) {
+        dispatch(logout());
+        localStorage.clear();
+      }
     }).catch((err) => {
       console.log('Error connecting to server');
     });

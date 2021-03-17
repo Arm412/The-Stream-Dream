@@ -32,7 +32,14 @@ app.use(cookieParser());
 app.use('/twitch', twitchAPI);
 
 app.get("/", (req, res) => {
-  res.sendStatus(200);
+  if (!req.session.visited) {
+    console.log('New Session');
+    req.session.visited = true;
+    res.send(true);
+  } else {
+    console.log('Old Session');
+    res.send(false);
+  }
 })
 
 const PORT = process.env.PORT || 3001;

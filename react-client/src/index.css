@@ -34,6 +34,19 @@ p {
   font-size: 1.25rem;
 }
 
+.home-btn {
+  height: auto;
+  width: auto;
+  padding: 4px;
+  border-radius: 5%;
+  background-color: #3700B3;
+  position: absolute;
+  top: 25px;
+  left: 25px;
+  z-index: 3;
+  transition: .25s;
+}
+
 .home-img {
   position: absolute;
   top: 0;
@@ -76,7 +89,7 @@ p {
   position: absolute;
   top: 25px;
   right: 25px;
-  z-index: 1;
+  z-index: 3;
   width: 50px;
   height: 50px;
   align-items: center;
@@ -144,7 +157,7 @@ p {
   transition: .25s;
 }
 
-.btn-div:hover, .login-twitch-btn:hover {
+.btn-div:hover, .login-twitch-btn:hover, .home-btn:hover {
   background-color: #6200EE;
   color: white;
   cursor: pointer;
@@ -255,6 +268,15 @@ p {
 
 /* Top Twitch Games CSS */
 
+.top-games-container {
+  background-image: url('./Images/streamer.jpeg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+  height: 100vh;
+}
+
 .twitch-list {
   width: 100%;
   height: 400px;
@@ -265,6 +287,7 @@ p {
   padding-bottom: 10px;
   padding-left: 15%;
   padding-right: 15%;
+  background-color: inherit;
 }
 
 .twitch-list p {
@@ -274,7 +297,8 @@ p {
 
 .twitch-list div {
   text-align: center;
-  background-color: #6441a5;
+  background-color: inherit;
+  color: #03DAC5;
 }
 
 .game-rank {
@@ -306,27 +330,65 @@ p {
 }
 
 .carousel-wrapper {
-  background-color: #6441a5;
+  background-color: rgba(39, 25, 65, .70);
   margin-top: 5vh;
+  margin-left: 15%;
+  margin-right: 15%;
   min-height: 400px;
 }
 
 .carousel a:hover {
-  background-color: #b9a3e3;
+  background-color: rgba(73, 64, 89, 1);
 }
 
 
 /* Find Channel CSS */
 
+.find-channel-container {
+  background-image: url('./Images/keyboardcloseup.jpeg');
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
+  background-position: center;
+  height: 100vh;
+}
+
+.container-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  z-index: 0;
+  background-color: #121212;
+  min-height: 100vh;
+  height: 100%;
+  width: 100%;
+  opacity: 60%;
+}
+
+.pop-out {
+  position: relative;
+  z-index: 2;
+}
+
 .input-div {
+  width: 400px;
+  height: 50px;
+  margin-left: calc(50% - 200px);
+  margin-bottom: 2%;
+}
+
+.input-div form {
   width: 300px;
-  margin-left: calc(50% - 150px);
+  height: auto;
+  float: left;
 }
 
 .channel-container {
-  width: 300px;
+  width: 450px;
   height: 500px;
-  margin-left: calc(50% - 150px);
+  margin-left: calc(50% - 225px);
+  overflow-y: scroll;
+  background-color: rgba(12, 12, 12, .60);
 }
 
 .search-img {
@@ -335,23 +397,60 @@ p {
   float: left;
 }
 
+.find-channel-btn {
+  width: 100px;
+  height: 50px;
+  background-color: #3700B3;
+  color: white;
+  float: right;
+}
+
 .channel-holder {
   overflow:auto;
   display: flex;
   margin: 5px 0;
 }
 
-.channel-holder div {
+.channel-holder:hover {
+  background-color: rgba(55 , 0, 179, .60);
+  cursor: pointer;
+}
+
+.channel-holder :is(.pad-flex, .channel-img) {
   flex: 1;
+}
+
+.channel-holder .channel-name {
+  flex: 2;
 }
 
 .center-text {
   text-align: center;
-  padding-top: 30%;
+  padding-top: 15%;
+}
+
+.modal-content {
+  background-color: rgba(12, 12, 12, 1);
+}
+
+.modal-content > .modal-header {
+  border-bottom: 1px solid #dee2e6;
 }
 
 .modal-body * {
   font-size: 1.5em;
+}
+
+.text-link:hover {
+  color: white;
+}
+
+.close {
+  color: white;
+}
+
+.close:hover {
+  color: crimson;
 }
 
 .nav-container {
