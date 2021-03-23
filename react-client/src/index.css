@@ -1,470 +1,529 @@
-html, body {
-  font-family: 'Poppins', sans-serif;
-  background-color: #121212;
-  color: #03DAC5;
-  margin: 0;
-  padding: 0;
+html,
+body {
+	font-family: 'Poppins', sans-serif;
+	background-color: #121212;
+	color: #03dac5;
+	margin: 0;
+	padding: 0;
 }
 
-h1, h2, h3, h4, h5 {
-  /*color: #BB86FC;*/
-  color: white;
+h1,
+h2,
+h3,
+h4,
+h5 {
+	/*color: #BB86FC;*/
+	color: white;
 }
 
 h1 {
-  font-size: 5rem;
+	font-size: 5rem;
 }
 
 footer {
-  margin-top: 30px;
-  text-align: center;
+	margin-top: 30px;
+	text-align: center;
 }
 
 a {
-  color: inherit;
-  margin: 0;
+	color: inherit;
+	margin: 0;
 }
 
 a:hover {
-  text-decoration: none;
-  color: inherit;
+	text-decoration: none;
+	color: inherit;
 }
 
 p {
-  font-size: 1.25rem;
+	font-size: 1.25rem;
 }
 
 .home-btn {
-  height: auto;
-  width: auto;
-  padding: 4px;
-  border-radius: 5%;
-  background-color: #3700B3;
-  position: absolute;
-  top: 25px;
-  left: 25px;
-  z-index: 3;
-  transition: .25s;
+	padding: 0.5rem 0.5rem;
+	border-radius: 5%;
+	background-color: #3700b3;
+	position: absolute;
+	top: 25px;
+	left: 25px;
+	z-index: 3;
+	transition: 0.25s;
 }
 
 .home-img {
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 0;
-  height: 100%;
-  width: 100%;
-  background-image: url('./Images/streamsetup.jpeg');
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-position: center;
-  
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 0;
+	height: 100%;
+	width: 100%;
+	background-image: url('./Images/streamsetup.jpeg');
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	background-position: center;
 }
 
 .home-img-cover {
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 0;
-  background-color: #121212;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  min-height: 100vh;
-  height: 100%;
-  width: 100%;
-  animation: 3s forwards revealBackground;
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 0;
+	background-color: #121212;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	min-height: 100vh;
+	height: 100%;
+	width: 100%;
+	animation: 3s forwards revealBackground;
 }
 
 .home-div {
-  position: relative;
-  min-height: 100vh;
-  max-height: 100vh;
-  overflow-y: auto;
-  width: 100%;
-  z-index: 2;
+	position: relative;
+	min-height: 100vh;
+	max-height: 100vh;
+	overflow-y: auto;
+	width: 100%;
+	z-index: 2;
 }
 
 .static-login-div {
-  position: absolute;
-  top: 25px;
-  right: 25px;
-  z-index: 3;
-  width: 50px;
-  height: 50px;
-  align-items: center;
-  
-  
+	position: absolute;
+	top: 25px;
+	right: 25px;
+	z-index: 3;
+	width: 50px;
+	height: 50px;
+	align-items: center;
 }
 
 .static-login-div img {
-  max-width: 50px;
-  max-height: 50px;
+	max-width: 50px;
+	max-height: 50px;
 }
 
 .welcome-div {
-  height: 65vh;
-  min-height: 350px;
+	height: 65vh;
+	min-height: 350px;
 }
 
 .welcome-div img {
-  height: 150px;
-  width: 150px;
-  display: block;
-  margin-left: auto;
-  margin-right: auto;
+	height: 150px;
+	width: 150px;
+	display: block;
+	margin-left: auto;
+	margin-right: auto;
 }
 
 .header {
-  position: relative;
-  z-index: 2;
-  align-items: center;
-  padding: 10vh 0;
-  text-align: center;
-  font-size: 2rem;
-  color: white;
+	position: relative;
+	z-index: 2;
+	align-items: center;
+	padding: 10vh 0;
+	text-align: center;
+	font-size: 2rem;
+	color: white;
 }
 
 .btn-div {
-  position: relative;
-  z-index: 2;
-  background-color: #3700B3;
-  color: white;
-  width: auto;
-  padding: 10px 20px;
-  margin: 0 10px;
-  text-align: center;
-  border-radius: 25px;
-  text-decoration: none;
-  font-size: 1rem;
-  font-family: Arial, Helvetica, sans-serif;
-  font-weight: bold;
-  transition: .25s;
+	position: relative;
+	z-index: 2;
+	background-color: #3700b3;
+	color: white;
+	width: auto;
+	padding: 10px 20px;
+	margin: 0 10px;
+	text-align: center;
+	border-radius: 25px;
+	text-decoration: none;
+	font-size: 1rem;
+	font-family: Arial, Helvetica, sans-serif;
+	font-weight: bold;
+	transition: 0.25s;
 }
 
 .login-twitch-btn {
-  position: relative;
-  display: inline-block;
-  z-index: 2;
-  background-color: #3700B3;
-  color: white;
-  padding: 10px 20px;
-  margin-left: calc(50vw - 89px);
-  border-radius: 25px;
-  font-size: 1rem;
-  font-family: Arial, Helvetica, sans-serif;
-  font-weight: bold;
-  transition: .25s;
+	position: relative;
+	display: inline-block;
+	z-index: 2;
+	background-color: #3700b3;
+	color: white;
+	padding: 10px 20px;
+	margin-left: calc(50vw - 89px);
+	border-radius: 25px;
+	font-size: 1rem;
+	font-family: Arial, Helvetica, sans-serif;
+	font-weight: bold;
+	transition: 0.25s;
 }
 
-.btn-div:hover, .login-twitch-btn:hover, .home-btn:hover {
-  background-color: #6200EE;
-  color: white;
-  cursor: pointer;
+.btn-div:hover,
+.login-twitch-btn:hover,
+.home-btn:hover {
+	background-color: #6200ee;
+	color: white;
+	cursor: pointer;
 }
 
 .hidden {
-  display: none;
+	display: none;
 }
 
 .btn:focus {
-  outline: none;
+	outline: none;
 }
 
 .btn:active {
-  transform: scale(0.98);
+	transform: scale(0.98);
 }
 .btn-block {
-  display: block;
-  width: 100%;
+	display: block;
+	width: 100%;
 }
 
 .holder-div {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  position: absolute;
-  bottom: 0;
-  height: 35vh;
-  width: 100%;
+	display: flex;
+	flex-wrap: wrap;
+	justify-content: center;
+	position: absolute;
+	bottom: 0;
+	height: 35vh;
+	width: 100%;
 }
 
 .holder-div > div {
-  background-color: rgba(12, 12, 12, .60);
-  flex: 1;
-  margin: 10px;
-  padding: 30px 30px 10px 30px;
-  display: flex;
-  flex-direction: column;
-  min-width: 250px;
-  max-width: 400px;
+	background-color: rgba(12, 12, 12, 0.6);
+	flex: 1;
+	margin: 10px;
+	padding: 30px 30px 10px 30px;
+	display: flex;
+	flex-direction: column;
+	min-width: 250px;
+	max-width: 400px;
 }
 
 .holder-div > div:hover {
-  animation: .25s forwards focusHomeDiv;
+	animation: 0.25s forwards focusHomeDiv;
 }
 
 .card-flex {
-  display: flex;
+	display: flex;
 }
 
-.card-header-div, .card-header-btn {
-  flex: 1;
+.card-header-div,
+.card-header-btn {
+	flex: 1;
 }
 
 .card-body-div {
-  flex: 2;
+	flex: 2;
 }
 
 .center-div {
-  padding-left: 50%;
+	padding-left: 50%;
 }
 
 .loader-div {
-  height: 50vh;
-  padding-left: calc((50%) - 76px);
-  justify-content: center;
-  align-items: center;
+	height: 50vh;
+	padding-left: calc((50%) - 76px);
+	justify-content: center;
+	align-items: center;
 }
 
 .loader {
-  width: 120px;
-  height: 120px;
-  border: 16px solid #f1f1f1;
-  border-radius: 50%;
-  border-top: 16px solid #3700B3;
-  -webkit-animation: spin 2s linear infinite; /* Safari */
-  animation: spin 2s linear infinite;
+	width: 120px;
+	height: 120px;
+	border: 16px solid #f1f1f1;
+	border-radius: 50%;
+	border-top: 16px solid #3700b3;
+	-webkit-animation: spin 2s linear infinite; /* Safari */
+	animation: spin 2s linear infinite;
 }
 
 @keyframes revealBackground {
-  0% {
-    opacity: 100%;
-  }
-  100% {
-    opacity: 60%;
-  }
+	0% {
+		opacity: 100%;
+	}
+	100% {
+		opacity: 60%;
+	}
 }
 
 @keyframes focusHomeDiv {
-  0% {
-    background-color: rgba(12, 12, 12, .60);
-  }
-  100% {
-    background-color: rgba(12, 12, 12, 1);
-  }
+	0% {
+		background-color: rgba(12, 12, 12, 0.6);
+	}
+	100% {
+		background-color: rgba(12, 12, 12, 1);
+	}
 }
 
 @-webkit-keyframes spin {
-  0% { -webkit-transform: rotate(0deg); }
-  100% { -webkit-transform: rotate(360deg); }
+	0% {
+		-webkit-transform: rotate(0deg);
+	}
+	100% {
+		-webkit-transform: rotate(360deg);
+	}
 }
 
 @keyframes spin {
-  0% { transform: rotate(0deg); }
-  100% { transform: rotate(360deg); }
+	0% {
+		transform: rotate(0deg);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
 }
-
 
 /* Top Twitch Games CSS */
 
 .top-games-container {
-  background-image: url('./Images/streamer.jpeg');
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-position: center;
-  height: 100vh;
+	background-image: url('./Images/streamer.jpeg');
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	background-position: center;
+	height: 100vh;
 }
 
 .twitch-list {
-  width: 100%;
-  height: 400px;
-  display: block;
-  float: left;
-  font-family: Tahoma, sans-serif;
-  font-size: larger;
-  padding-bottom: 10px;
-  padding-left: 15%;
-  padding-right: 15%;
-  background-color: inherit;
+	width: 100%;
+	height: 400px;
+	display: block;
+	float: left;
+	font-family: Tahoma, sans-serif;
+	font-size: larger;
+	padding-bottom: 10px;
+	padding-left: 15%;
+	padding-right: 15%;
+	background-color: inherit;
 }
 
 .twitch-list p {
-  margin-bottom: 3vh;
-  margin-top: 3vh;
+	margin-bottom: 3vh;
+	margin-top: 3vh;
 }
 
 .twitch-list div {
-  text-align: center;
-  background-color: inherit;
-  color: #03DAC5;
+	text-align: center;
+	background-color: inherit;
+	color: #03dac5;
 }
 
 .game-rank {
-  border-style: solid solid solid solid;
-  flex: 20%;
+	border-style: solid solid solid solid;
+	flex: 20%;
 }
 
 .game-name {
-  border-style: solid solid solid hidden;
-  flex: 30%;
+	border-style: solid solid solid hidden;
+	flex: 30%;
 }
 
 .game-id {
-  border-style: solid solid solid hidden;
-  flex: 20%
+	border-style: solid solid solid hidden;
+	flex: 20%;
 }
 
 .game-image {
-  float: left;
-  padding-top: 10vh;
-  padding-left: 2vw;
+	float: left;
+	padding-top: 10vh;
+	padding-left: 2vw;
 }
 
 .game-info {
-  margin-top: 9vh;
-  margin-left: calc(5vw + 180px);
-  border-style: solid;
-  margin-right: 2vw;
+	margin-top: 9vh;
+	margin-left: calc(5vw + 180px);
+	border-style: solid;
+	margin-right: 2vw;
 }
 
 .carousel-wrapper {
-  background-color: rgba(39, 25, 65, .70);
-  margin-top: 5vh;
-  margin-left: 15%;
-  margin-right: 15%;
-  min-height: 400px;
+	background-color: rgba(39, 25, 65, 0.7);
+	margin-top: 5vh;
+	margin-left: 15%;
+	margin-right: 15%;
+	min-height: 400px;
 }
 
 .carousel a:hover {
-  background-color: rgba(73, 64, 89, 1);
+	background-color: rgba(73, 64, 89, 1);
 }
-
 
 /* Find Channel CSS */
 
 .find-channel-container {
-  background-image: url('./Images/keyboardcloseup.jpeg');
-  background-size: cover;
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-position: center;
-  height: 100vh;
+	background-image: url('./Images/keyboardcloseup.jpeg');
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	background-position: center;
+	height: 100vh;
 }
 
 .container-overlay {
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 0;
-  background-color: #121212;
-  min-height: 100vh;
-  height: 100%;
-  width: 100%;
-  opacity: 60%;
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 0;
+	background-color: #121212;
+	min-height: 100vh;
+	height: 100%;
+	width: 100%;
+	opacity: 70%;
 }
 
 .pop-out {
-  position: relative;
-  z-index: 2;
+	position: relative;
+	z-index: 2;
 }
 
 .input-div {
-  width: 400px;
-  height: 50px;
-  margin-left: calc(50% - 200px);
-  margin-bottom: 2%;
+	width: 400px;
+	height: 50px;
+	margin-left: calc(50% - 200px);
+	margin-bottom: 2%;
 }
 
 .input-div form {
-  width: 300px;
-  height: auto;
-  float: left;
+	width: 300px;
+	height: auto;
+	float: left;
 }
 
 .channel-container {
-  width: 450px;
-  height: 500px;
-  margin-left: calc(50% - 225px);
-  overflow-y: scroll;
-  background-color: rgba(12, 12, 12, .60);
+	width: 450px;
+	height: 500px;
+	margin-left: calc(50% - 225px);
+	overflow-y: scroll;
+	background-color: rgba(12, 12, 12, 0.6);
 }
 
 .search-img {
-  width: 100px;
-  height: 100px;
-  float: left;
+	width: 100px;
+	height: 100px;
+	float: left;
 }
 
 .find-channel-btn {
-  width: 100px;
-  height: 50px;
-  background-color: #3700B3;
-  color: white;
-  float: right;
+	padding: 0.75rem 1rem;
+	background-color: #3700b3;
+	color: white;
+	float: right;
 }
 
 .channel-holder {
-  overflow:auto;
-  display: flex;
-  margin: 5px 0;
+	overflow: auto;
+	display: flex;
+	margin: 5px 0;
 }
 
 .channel-holder:hover {
-  background-color: rgba(55 , 0, 179, .60);
-  cursor: pointer;
+	background-color: rgba(55, 0, 179, 0.6);
+	cursor: pointer;
 }
 
 .channel-holder :is(.pad-flex, .channel-img) {
-  flex: 1;
+	flex: 1;
 }
 
-.channel-holder .channel-name {
-  flex: 2;
+.channel-name {
+	padding-top: 35px;
+	flex: 2;
 }
 
 .center-text {
-  text-align: center;
-  padding-top: 15%;
+	text-align: center;
 }
 
 .modal-content {
-  background-color: rgba(12, 12, 12, 1);
+	background-color: rgba(12, 12, 12, 1);
 }
 
 .modal-content > .modal-header {
-  border-bottom: 1px solid #dee2e6;
+	border-bottom: 1px solid #dee2e6;
 }
 
 .modal-body * {
-  font-size: 1.5em;
+	font-size: 1.5em;
 }
 
 .text-link:hover {
-  color: white;
+	color: white;
 }
 
 .close {
-  color: white;
+	color: white;
 }
 
 .close:hover {
-  color: crimson;
+	color: crimson;
 }
 
 .nav-container {
-  position: absolute;
-  top: 0;
-  left: 0;
-  width: 300px;
-  height: 100vh;
-  background-color: #121212;
-  color: #BB86FC;
+	position: absolute;
+	top: 0;
+	left: 0;
+	width: 300px;
+	height: 100vh;
+	background-color: #121212;
+	color: #bb86fc;
 }
 
 .nav-header {
-  width: 100%;
-  height: 4rem;
-  background-color: grey;
+	width: 100%;
+	height: 4rem;
+	background-color: grey;
+}
+
+/* Find Media CSS */
+
+.find-media-container {
+	background-image: url('./Images/monitors.jpg');
+	background-size: cover;
+	background-repeat: no-repeat;
+	background-attachment: fixed;
+	background-position: center;
+	height: 100vh;
+	width: 100vw;
+}
+
+.flex-div {
+	display: flex;
+}
+
+.media-form-container,
+.media-results-div {
+	box-sizing: content-box;
+	min-height: 40vh;
+	margin: 0 5vw;
+	border: solid red;
+	justify-content: space-around;
+}
+
+.media-form {
+	box-sizing: content-box;
+	border: solid #03dac5;
+	border-radius: 5%;
+	max-width: 20vw;
+	min-width: 20vw;
+	margin: 2vh 0;
+	padding: 10px 20px;
+	background-color: rgba(12, 12, 12, 0.6);
+	flex: 1;
+}
+
+.media-clip-result {
+	display: inline-block;
+	border: solid purple;
+}
+
+.media-video-result {
+}
+
+.broadcaster-div {
+	padding: 2rem;
+	margin: 0;
+	width: auto;
 }
