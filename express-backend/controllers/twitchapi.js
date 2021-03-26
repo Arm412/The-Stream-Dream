@@ -13,7 +13,6 @@ const getTopTwitchGames = (accessToken) => {
 				Authorization: 'Bearer ' + accessToken,
 			},
 		};
-		console.log('Calling Twitch Games API.');
 		request.get(gameOptions, (err, res, body) => {
 			if (err) {
 				reject(err);
@@ -33,7 +32,6 @@ const getTopTwitchGames = (accessToken) => {
 exports.getTopGames = async (req, res) => {
 	let AT = '';
 	if (!req.session.accessToken) {
-		console.log('Getting token');
 		await Helpers.requestToken()
 			.then((accessToken) => {
 				req.session.accessToken = accessToken;
@@ -44,7 +42,6 @@ exports.getTopGames = async (req, res) => {
 			});
 	} else {
 		AT = req.session.accessToken;
-		console.log('Token already aquired');
 	}
 	// Get top games on twitch currently
 	await getTopTwitchGames(AT)
@@ -61,7 +58,6 @@ exports.findChannels = async (req, res) => {
 	if (!req.session.accessToken) {
 		await Helpers.requestToken()
 			.then((accessToken) => {
-				console.log('In Resolved Promise');
 				req.session.accessToken = accessToken;
 				AT = accessToken;
 			})
@@ -113,9 +109,7 @@ exports.profileData = async (req, res) => {
 				console.log('Status: ' + response.statusCode);
 				res.status(response.statusCode).send(body);
 			} else {
-				console.log('Success');
 				const userTwitchObject = JSON.parse(body).data[0];
-				console.log(userTwitchObject);
 				res.status(response.statusCode).send(userTwitchObject);
 			}
 		}
@@ -127,7 +121,6 @@ exports.getMedia = async (req, res) => {
 	if (!req.session.accessToken) {
 		await Helpers.requestToken()
 			.then((accessToken) => {
-				console.log('In Resolved Promise');
 				req.session.accessToken = accessToken;
 				AT = accessToken;
 			})
@@ -142,8 +135,9 @@ exports.getMedia = async (req, res) => {
 		Helpers.getUserID(req.body.id, AT)
 			.then((userObject) => {
 				console.log(userObject);
+
+				// No user_id was found with the given login
 				if (userObject.length === 0) {
-					console.log('No user found');
 					const returnObj = {
 						notFound: true,
 						data: 'Unable to find user with given login.',
@@ -158,18 +152,14 @@ exports.getMedia = async (req, res) => {
 				}
 			})
 			.then((ret) => {
-				console.log('Ret: ');
-				console.log(ret);
 				res.send(ret);
 			})
 			.catch((err) => {
-				console.log('Error:');
 				console.log(err);
 			});
 	} else {
 		Helpers.getGameID(req.body.id, AT)
 			.then((gameObject) => {
-				console.log(gameObject);
 				if (gameObject.length === 0) {
 					const returnObj = {
 						notFound: true,
@@ -185,12 +175,9 @@ exports.getMedia = async (req, res) => {
 				}
 			})
 			.then((ret) => {
-				console.log('Ret: ');
-				console.log(ret);
 				res.send(ret);
 			})
 			.catch((err) => {
-				console.log('Error:');
 				console.log(err);
 			});
 	}

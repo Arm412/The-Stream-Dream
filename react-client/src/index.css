@@ -37,6 +37,7 @@ a:hover {
 
 p {
 	font-size: 1.25rem;
+	margin: 0;
 }
 
 .home-btn {
@@ -371,7 +372,7 @@ p {
 	min-height: 100vh;
 	height: 100%;
 	width: 100%;
-	opacity: 70%;
+	opacity: 80%;
 }
 
 .pop-out {
@@ -493,37 +494,104 @@ p {
 	display: flex;
 }
 
-.media-form-container,
-.media-results-div {
+.media-form-container {
 	box-sizing: content-box;
-	min-height: 40vh;
+	min-height: 30vh;
+	max-height: 30vh;
 	margin: 0 5vw;
-	border: solid red;
 	justify-content: space-around;
 }
 
-.media-form {
+.media-select-form,
+.media-input-form {
 	box-sizing: content-box;
-	border: solid #03dac5;
-	border-radius: 5%;
+	border-radius: 2%;
 	max-width: 20vw;
 	min-width: 20vw;
-	margin: 2vh 0;
-	padding: 10px 20px;
-	background-color: rgba(12, 12, 12, 0.6);
+	margin: 5vh 0;
+	padding: 20px 20px;
+	background-color: rgba(12, 12, 12, 0.9);
+	flex: 1;
+	border: solid white 1px;
+}
+
+.custom-select-div {
+	position: relative;
+	margin: 15% 35% 0 35%;
+}
+
+.media-select-dropdown {
+	width: 100%;
+	position: relative;
+	background-color: #3700b3;
+	color: white;
+	border: none;
+}
+
+.media-clip-result,
+.media-header {
+	position: relative;
+	display: flex;
+	max-height: 30px;
+	color: #03dac5;
+}
+
+.result-column-name {
+	position: relative;
+	box-sizing: content-box;
 	flex: 1;
 }
 
-.media-clip-result {
-	display: inline-block;
-	border: solid purple;
+.result-column-title {
+	position: relative;
+	padding: 0 5%;
+	box-sizing: content-box;
+	flex: 3;
+	white-space: nowrap;
+	overflow-x: hidden;
 }
 
-.media-video-result {
+.result-column-views {
+	position: relative;
+	box-sizing: content-box;
+	flex: 1;
 }
 
-.broadcaster-div {
-	padding: 2rem;
-	margin: 0;
-	width: auto;
+.media-results-div {
+	margin: 0 15vw 5vh 15vw;
+	background-color: rgba(12, 12, 12, 0.8);
+	max-height: 50vh;
+	overflow-y: scroll;
+	border: solid white 1px;
+}
+
+.text-color {
+	color: #03dac5;
+}
+
+.header-color {
+	color: white;
+}
+
+.media-clip-result:hover {
+	background-color: rgba(55, 0, 179, 0.6);
+	color: white;
+}
+
+.basic-btn {
+	padding: 0.75rem 1rem;
+	background-color: #3700b3;
+	color: white;
+	width: 10vw;
+	border: none;
+}
+
+.basic-btn:hover {
+	cursor: pointer;
+	background-color: #6200ee;
+	transition: 0.25s;
+}
+
+.media-btn-div {
+	margin: 0 45vw;
 }

@@ -2,7 +2,9 @@ import React, { useState, useEffect, useRef } from 'react';
 import Header from './Header';
 import axios from 'axios';
 import SelectForm from './SelectForm';
-import ClipResult from './ClipResult';
+import MediaResult from './MediaResult';
+import MediaHeader from './MediaHeader';
+import BasicBtn from './BasicBtn';
 
 axios.defaults.withCredentials = true;
 
@@ -30,7 +32,7 @@ const SearchMedia = (props) => {
 					console.log('Returned data');
 					console.log(returnData);
 					if (returnData.data.notFound) {
-						//inputElement.current.style.backgroundColor = '#c06572';
+						inputElement.current.style.backgroundColor = '#c06572';
 						reject('No data found for ' + searchBy);
 					} else {
 						resolve(returnData.data);
@@ -72,57 +74,87 @@ const SearchMedia = (props) => {
 		<div className="find-media-container">
 			<div className="container-overlay"></div>
 			<div className="pop-out">
-				<Header title="Search for Clips and Videos!" />
 				{mediaState === 'input' || mediaState === 'loading' ? (
-					<div className="media-form-container flex-div">
-						<SelectForm
-							formClass="media-form"
-							headerText="Select type of media"
-							setFunction={setMediaOption}
-							parentVariable={mediaOption}
-							selectOptions={['Videos', 'Clips']}
-						/>
-						<SelectForm
-							formClass="media-form"
-							headerText={'Search the ' + mediaOption + ' by'}
-							setFunction={setSearchBy}
-							parentVariable={searchBy}
-							selectOptions={['Game', 'User']}
-						/>
-						<form className="media-form">
-							<h2 className="center-text">Input name of the {searchBy}</h2>
-							<input
-								value={identifier}
-								className="form-control form-control-lg"
-								ref={inputElement}
-								placeholder={'Input ' + searchBy}
-								onChange={(e) => setIdentifier(e.target.value)}
+					<div>
+						<Header title="Search for Clips and Videos!" />
+						<div className="media-form-container flex-div">
+							<SelectForm
+								formClass="media-select-form"
+								headerText="Select type of media"
+								setFunction={setMediaOption}
+								parentVariable={mediaOption}
+								selectOptions={['Videos', 'Clips']}
 							/>
-						</form>
+							<SelectForm
+								formClass="media-select-form"
+								headerText={'Search the ' + mediaOption + ' by'}
+								setFunction={setSearchBy}
+								parentVariable={searchBy}
+								selectOptions={['Game', 'User']}
+							/>
+							<form className="media-input-form">
+								<h2 className="center-text">Input name of the {searchBy}</h2>
+								<input
+									value={identifier}
+									className="form-control form-control-lg"
+									ref={inputElement}
+									placeholder={'Input ' + searchBy}
+									onChange={(e) => setIdentifier(e.target.value)}
+								/>
+							</form>
+						</div>
 					</div>
 				) : (
-					<div className="media-results-div">
-						<ClipResult />
+					<div>
+						<Header
+							title={
+								(mediaOption === 'videos' ? 'Video' : 'Clip') +
+								' results for ' +
+								identifier
+							}
+						/>
+						<div className="media-results-div">
+							<MediaHeader streamer="Broadcaster" title="Title" views="Views" />
+							{mediaOption === 'videos'
+								? mediaArray.current.map((media) => (
+										<MediaResult
+											mediaLink={media.url}
+											streamer={media.user_name}
+											title={media.title}
+											views={media.view_count}
+											key={media.id}
+										/>
+								  ))
+								: mediaArray.current.map((media) => (
+										<MediaResult
+											mediaLink={media.url}
+											streamer={media.broadcaster_name}
+											title={media.title}
+											views={media.view_count}
+											key={media.id}
+										/>
+								  ))}
+						</div>
 					</div>
 				)}
 				{mediaState === 'input' || mediaState === 'loading' ? (
-					<button
-						className="find-media-btn"
+					<BasicBtn
 						onClick={() => {
 							setMediaState('loading');
 						}}
 						disabled={identifier === ''}
-					>
-						Search
-					</button>
+						btnText="Search"
+						btnClass="media-btn-div"
+					/>
 				) : (
-					<button
+					<BasicBtn
 						onClick={() => {
 							setMediaState('input');
 						}}
-					>
-						Back to search
-					</button>
+						disabled={false}
+						btnText="Back to search"
+						btnClass="media-btn-div"
+					/>
 				)}
 			</div>
 		</div>

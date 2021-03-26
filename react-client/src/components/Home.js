@@ -22,8 +22,13 @@ const Home = (props) => {
 			.then((newUser) => {
 				let newSession = newUser.data;
 				if (newSession) {
+					console.log(newSession);
+					console.log('New session, loggin out');
 					dispatch(logout());
 					localStorage.clear();
+				} else {
+					console.log(newSession);
+					console.log('Still logged In');
 				}
 			})
 			.catch((err) => {

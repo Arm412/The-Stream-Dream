@@ -19,8 +19,6 @@ exports.requestToken = (userCode = '') => {
 				if (err) {
 					return console.log(err);
 				}
-				console.log('Status: ' + res.statusCode);
-				console.log(body);
 
 				if (res.statusCode == 200) {
 					resolve(res.body.access_token);
@@ -46,8 +44,6 @@ exports.requestToken = (userCode = '') => {
 				if (err) {
 					return console.log(err);
 				}
-				console.log('Status: ' + res.statusCode);
-				console.log(body);
 
 				if (res.statusCode == 200) {
 					resolve(res.body.access_token);
@@ -75,10 +71,8 @@ exports.findChannel = (accessToken, user) => {
 				reject(err);
 			} else {
 				if (res.statusCode != 200) {
-					console.log('Status: ' + res.statusCode);
 					reject(body);
 				}
-				console.log('Success');
 				resolve(body);
 			}
 		});
@@ -101,10 +95,8 @@ exports.getUserID = (loginName, accessToken) => {
 				reject(err);
 			} else {
 				if (res.statusCode != 200) {
-					console.log('Status: ' + res.statusCode);
 					reject(body);
 				}
-				console.log('Success');
 				const userObj = JSON.parse(body);
 				resolve(userObj.data);
 			}
@@ -127,12 +119,10 @@ exports.getGameID = (gameName, accessToken) => {
 				reject(err);
 			} else {
 				if (res.statusCode != 200) {
-					console.log('Status: ' + res.statusCode);
 					reject(body);
 				}
-				console.log('Success');
 				const gameObj = JSON.parse(body);
-				console.log(gameObj);
+				//console.log(gameObj);
 				resolve(gameObj.data);
 			}
 		});
@@ -141,9 +131,7 @@ exports.getGameID = (gameName, accessToken) => {
 
 exports.getVideos = (identifier, searchBy, accessToken) => {
 	return new Promise((resolve, reject) => {
-		console.log('Looking for videos with ' + searchBy + ' id ' + identifier);
 		const queryVar = searchBy === 'user' ? 'user_id' : 'game_id';
-		console.log(process.env.GET_VIDEOS + '?' + queryVar + '=' + identifier);
 		const getVideoObject = {
 			url: process.env.GET_VIDEOS + '?' + queryVar + '=' + identifier,
 			method: 'GET',
@@ -158,12 +146,10 @@ exports.getVideos = (identifier, searchBy, accessToken) => {
 				reject(err);
 			} else {
 				if (res.statusCode != 200) {
-					console.log('Status: ' + res.statusCode);
 					reject(body);
 				}
-				console.log('Get Video Success');
 				const gameObj = JSON.parse(body);
-				console.log(gameObj);
+				//console.log(gameObj);
 				resolve(gameObj.data);
 			}
 		});
@@ -173,7 +159,6 @@ exports.getVideos = (identifier, searchBy, accessToken) => {
 exports.getClips = (identifier, searchBy, accessToken) => {
 	return new Promise((resolve, reject) => {
 		const queryVar = searchBy === 'user' ? 'broadcaster_id' : 'game_id';
-		console.log(process.env.GET_CLIPS + '?' + queryVar + '=' + identifier);
 		const getClipsObject = {
 			url: process.env.GET_CLIPS + '?' + queryVar + '=' + identifier,
 			method: 'GET',
@@ -187,12 +172,10 @@ exports.getClips = (identifier, searchBy, accessToken) => {
 				reject(err);
 			} else {
 				if (res.statusCode != 200) {
-					console.log('Status: ' + res.statusCode);
 					reject(body);
 				}
-				console.log('Get Video Success');
 				const gameObj = JSON.parse(body);
-				console.log(gameObj);
+				//console.log(gameObj);
 				resolve(gameObj.data);
 			}
 		});
