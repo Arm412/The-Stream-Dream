@@ -1,21 +1,22 @@
-import React, { useState, useEffect, useRef } from "react";
-import Header from "./Header";
-import ChannelItem from "./ChannelItem";
-import Modal from "react-bootstrap/Modal";
-import Languages from "../helpers/languages.json";
-import axios from "axios";
+import React, { useState, useEffect, useRef } from 'react';
+import Header from './Header';
+import ChannelItem from './ChannelItem';
+import Modal from 'react-bootstrap/Modal';
+import Languages from '../helpers/languages.json';
+import axios from 'axios';
 
 const FindChannels = (props) => {
-	const [channelName, setChannelName] = useState("");
+	const [channelName, setChannelName] = useState('');
 	const [loading, setLoading] = useState(false);
 	const [showModal, setShowModal] = useState(false);
 	const channelArray = useRef([]);
 	const channelList = useRef();
-	const chosenChannel = useRef("");
+	const chosenChannel = useRef('');
 
 	const queryChannels = () => {
+		// Call the find channel backend api endpoint to query the twitch API
 		axios
-			.get("http://localhost:3001/twitch/findChannels?user=" + channelName, {
+			.get('http://localhost:3001/twitch/findChannels?user=' + channelName, {
 				withCredentials: true,
 			})
 			.then((jsondata) => {
@@ -28,6 +29,7 @@ const FindChannels = (props) => {
 			});
 	};
 
+	// Update state for the selected channel
 	const setActiveChannel = (channelObject) => {
 		chosenChannel.current = channelObject;
 		setShowModal(true);
@@ -35,7 +37,6 @@ const FindChannels = (props) => {
 
 	useEffect(() => {
 		if (loading) {
-      console.log('Querying');
 			queryChannels(channelName);
 		}
 	}, [loading]);
@@ -44,7 +45,7 @@ const FindChannels = (props) => {
 		<div className="find-channel-container">
 			<div className="container-overlay"></div>
 			<div className="pop-out">
-      <Header title="Find a Twitch Channel" />
+				<Header title="Find a Twitch Channel" />
 				<div className="input-div pop-out">
 					<form>
 						<input
@@ -56,11 +57,13 @@ const FindChannels = (props) => {
 						/>
 					</form>
 					<button
-            className='find-channel-btn'
+						className="find-channel-btn header-color primary-bg"
 						onClick={() => {
 							setLoading(true);
 						}}
-					>Search</button>
+					>
+						Search
+					</button>
 				</div>
 				{!loading && channelArray.current.length !== 0 ? (
 					<div className="channel-container" ref={channelList}>
@@ -78,23 +81,33 @@ const FindChannels = (props) => {
 				)}
 				<Modal show={showModal}>
 					<Modal.Header closeButton onHide={() => setShowModal(false)}>
-						<Modal.Header className='channel-modal modal-header'>
+						<Modal.Header className="channel-modal modal-header">
 							<Modal.Title>{chosenChannel.current.display_name}</Modal.Title>
 						</Modal.Header>
 					</Modal.Header>
-					<Modal.Body className='channel-modal'>
-						<p>Status: {chosenChannel.current.is_live ? "Live" : "Offline"}</p>
-						<p>Title: {chosenChannel.current.title}</p>
-						<p>
-							Language: {Languages[chosenChannel.current.broadcaster_language]}
-						</p>
+					<Modal.Body className="channel-modal">
+						<div className="modal-channel-body">
+							<p className="header-color">
+								Status: {chosenChannel.current.is_live ? 'Live' : 'Offline'}
+							</p>
+							<p className="header-color">
+								Title: {chosenChannel.current.title}
+							</p>
+							<p className="header-color">
+								Language:{' '}
+								{Languages[chosenChannel.current.broadcaster_language]}
+							</p>
+						</div>
+
 						<a
-              className='text-link'
+							className="text-link"
 							href={
-								"https://www.twitch.tv/" + chosenChannel.current.display_name
+								'https://www.twitch.tv/' + chosenChannel.current.display_name
 							}
 						>
-							Visit the channel
+							<button className="primary-bg header-color">
+								Visit the channel
+							</button>
 						</a>
 					</Modal.Body>
 				</Modal>

@@ -1,87 +1,27 @@
-require("dotenv").config({ path: "../.env" });
-const request = require("request");
-
-let AT = process.env.ACCESS_TOKEN;
-
-const requestToken = (url, userCode = "") => {
-	return new Promise((resolve, reject) => {
-		// Request Client access token
-		if (userCode === "") {
-			// Set API options
-			const options = {
-				url: process.env.GET_TOKEN,
-				json: true,
-				body: {
-					client_id: process.env.CLIENT_ID,
-					client_secret: process.env.CLIENT_SECRET,
-					grant_type: "client_credentials",
-				},
-			};
-
-			request.post(options, (err, res, body) => {
-				if (err) {
-					return console.log(err);
-				}
-				console.log("Status: " + res.statusCode);
-				console.log(body);
-
-				if (res.statusCode == 200) {
-					resolve(res.body.access_token);
-				} else {
-					reject(res.statusCode);
-				}
-			});
-		} else {
-			// Request user access token
-			const options = {
-				url: process.env.GET_TOKEN,
-				json: true,
-				body: {
-					client_id: process.env.CLIENT_ID,
-					client_secret: process.env.CLIENT_SECRET,
-					code: userCode,
-					grant_type: "authorization_code",
-					redirect_uri: process.env.REDIRECT_URI,
-				},
-			};
-
-			request.post(options, (err, res, body) => {
-				if (err) {
-					return console.log(err);
-				}
-				console.log("Status: " + res.statusCode);
-				console.log(body);
-
-				if (res.statusCode == 200) {
-					resolve(res.body.access_token);
-				} else {
-					reject(res.statusCode);
-				}
-			});
-		}
-	});
-};
+require('dotenv').config({ path: '../.env' });
+const e = require('express');
+const request = require('request');
+const Helpers = require('./Helpers/HelperFunctions');
 
 const getTopTwitchGames = (accessToken) => {
 	return new Promise((resolve, reject) => {
 		const gameOptions = {
-			url: process.env.GET_GAMES,
-			method: "GET",
+			url: process.env.GET_TOP_GAMES,
+			method: 'GET',
 			headers: {
-				"Client-ID": process.env.CLIENT_ID,
-				Authorization: "Bearer " + accessToken,
+				'Client-ID': process.env.CLIENT_ID,
+				Authorization: 'Bearer ' + accessToken,
 			},
 		};
-		console.log("Calling Twitch Games API.");
 		request.get(gameOptions, (err, res, body) => {
 			if (err) {
 				reject(err);
 			} else {
 				if (res.statusCode != 200) {
-					console.log("Status: " + res.statusCode);
+					console.log('Status: ' + res.statusCode);
 					reject(body);
 				}
-				console.log("Success");
+				console.log('Success');
 				resolve(body);
 			}
 		});
@@ -90,75 +30,47 @@ const getTopTwitchGames = (accessToken) => {
 
 // Request Top game data from the Twitch API
 exports.getTopGames = async (req, res) => {
-	let AT = "";
+	let AT = '';
 	if (!req.session.accessToken) {
-		console.log("Getting token");
-		await requestToken(process.env.GET_TOKEN)
-			  .then((accessToken) => {
-          req.session.accessToken = accessToken;
-				  AT = accessToken;
-			  })
+		await Helpers.requestToken()
+			.then((accessToken) => {
+				req.session.accessToken = accessToken;
+				AT = accessToken;
+			})
 			.catch((code) => {
-				console.log("Failed with return code: " + code);
+				console.log('Failed with return code: ' + code);
 			});
 	} else {
-    AT = req.session.accessToken;
-    console.log("Token already aquired");
-  }
+		AT = req.session.accessToken;
+	}
 	// Get top games on twitch currently
 	await getTopTwitchGames(AT)
 		.then((message) => {
 			res.json(message);
 		})
 		.catch((message) => {
-			res.send("Error: " + message);
+			res.send('Error: ' + message);
 		});
-};
-
-const findChannel = (accessToken, user) => {
-	return new Promise((resolve, reject) => {
-		const channelOptions = {
-			url: process.env.SEARCH_CHANNELS + "?query=" + user,
-			method: "GET",
-			headers: {
-				"Client-ID": process.env.CLIENT_ID,
-				Authorization: "Bearer " + accessToken,
-			},
-		};
-		request.get(channelOptions, (err, res, body) => {
-			if (err) {
-				reject(err);
-			} else {
-				if (res.statusCode != 200) {
-					console.log("Status: " + res.statusCode);
-					reject(body);
-				}
-				console.log("Success");
-				resolve(body);
-			}
-		});
-	});
 };
 
 exports.findChannels = async (req, res) => {
-	let AT = "";
+	let AT = '';
 	if (!req.session.accessToken) {
-		await requestToken(process.env.GET_TOKEN)
-    .then((accessToken) => {
-      console.log("In Resolved Promise");
-      req.session.accessToken = accessToken;
-      AT = accessToken;
+		await Helpers.requestToken()
+			.then((accessToken) => {
+				req.session.accessToken = accessToken;
+				AT = accessToken;
 			})
 			.catch((code) => {
-				console.log("Failed with return code: " + code);
+				console.log('Failed with return code: ' + code);
 			});
 	} else {
-    AT = req.session.accessToken;
-  }
+		AT = req.session.accessToken;
+	}
 
 	// Get requested user from Twitch API
 	const requestedUser = req.query.user;
-	await findChannel(AT, requestedUser)
+	await Helpers.findChannel(AT, requestedUser)
 		.then((message) => {
 			res.json(message);
 		})
@@ -168,21 +80,25 @@ exports.findChannels = async (req, res) => {
 };
 
 exports.profileData = async (req, res) => {
-	let UserToken = "";
-	await requestToken(process.env.GET_TOKEN, req.body.userCode)
-		.then((response) => {
-      req.session.userToken = response;
-			UserToken = response;
-		})
-		.catch((message) => {
-			console.log(message);
-		});
+	let UserToken = '';
+	if (!req.session.userToken) {
+		await Helpers.requestToken(req.body.userCode)
+			.then((response) => {
+				req.session.userToken = response;
+				UserToken = response;
+			})
+			.catch((message) => {
+				console.log(message);
+			});
+	} else {
+		UserToken = req.session.userToken;
+	}
 	const getUserOptions = {
 		url: process.env.GET_USERS,
-		method: "GET",
+		method: 'GET',
 		headers: {
-			"Client-ID": process.env.CLIENT_ID,
-			Authorization: "Bearer " + UserToken,
+			'Client-ID': process.env.CLIENT_ID,
+			Authorization: 'Bearer ' + UserToken,
 		},
 	};
 	request.get(getUserOptions, (err, response, body) => {
@@ -190,14 +106,79 @@ exports.profileData = async (req, res) => {
 			res.status(response.statusCode).send(body);
 		} else {
 			if (response.statusCode != 200) {
-				console.log("Status: " + response.statusCode);
-        res.status(response.statusCode).send(body);
+				console.log('Status: ' + response.statusCode);
+				res.status(response.statusCode).send(body);
 			} else {
-				console.log("Success");
-        const userTwitchObject = JSON.parse(body).data[0];
-				console.log(userTwitchObject);
-        res.status(response.statusCode).send(userTwitchObject);
+				const userTwitchObject = JSON.parse(body).data[0];
+				res.status(response.statusCode).send(userTwitchObject);
 			}
 		}
 	});
+};
+
+exports.getMedia = async (req, res) => {
+	let AT = '';
+	if (!req.session.accessToken) {
+		await Helpers.requestToken()
+			.then((accessToken) => {
+				req.session.accessToken = accessToken;
+				AT = accessToken;
+			})
+			.catch((code) => {
+				console.log('Failed with return code: ' + code);
+			});
+	} else {
+		AT = req.session.accessToken;
+	}
+
+	if (req.body.searchBy === 'user') {
+		Helpers.getUserID(req.body.id, AT)
+			.then((userObject) => {
+				console.log(userObject);
+
+				// No user_id was found with the given login
+				if (userObject.length === 0) {
+					const returnObj = {
+						notFound: true,
+						data: 'Unable to find user with given login.',
+					};
+					res.send(returnObj);
+				} else {
+					if (req.body.mediaOption === 'videos') {
+						return Helpers.getVideos(userObject[0].id, req.body.searchBy, AT);
+					} else {
+						return Helpers.getClips(userObject[0].id, req.body.searchBy, AT);
+					}
+				}
+			})
+			.then((ret) => {
+				res.send(ret);
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	} else {
+		Helpers.getGameID(req.body.id, AT)
+			.then((gameObject) => {
+				if (gameObject.length === 0) {
+					const returnObj = {
+						notFound: true,
+						data: 'Unable to find game with given name.',
+					};
+					res.send(returnObj);
+				} else {
+					if (req.body.mediaOption === 'videos') {
+						return Helpers.getVideos(gameObject[0].id, req.body.searchBy, AT);
+					} else {
+						return Helpers.getClips(gameObject[0].id, req.body.searchBy, AT);
+					}
+				}
+			})
+			.then((ret) => {
+				res.send(ret);
+			})
+			.catch((err) => {
+				console.log(err);
+			});
+	}
 };
