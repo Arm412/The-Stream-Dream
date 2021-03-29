@@ -3,7 +3,6 @@ import Header from './Header';
 import axios from 'axios';
 import SelectForm from './SelectForm';
 import MediaResult from './MediaResult';
-import MediaHeader from './MediaHeader';
 import BasicBtn from './BasicBtn';
 
 axios.defaults.withCredentials = true;
@@ -16,10 +15,7 @@ const SearchMedia = (props) => {
 	const inputElement = useRef();
 	const mediaArray = useRef();
 
-	useEffect(() => {
-		console.log(mediaOption);
-	}, [mediaOption]);
-
+	// Query the media from the twitch api by posting to the /twitch/getMedia endpoint
 	const queryTwitch = (mediaOption, searchBy, identifier) => {
 		return new Promise((resolve, reject) => {
 			axios
@@ -29,8 +25,6 @@ const SearchMedia = (props) => {
 					searchBy: searchBy,
 				})
 				.then((returnData) => {
-					console.log('Returned data');
-					console.log(returnData);
 					if (returnData.data.notFound) {
 						inputElement.current.style.backgroundColor = '#c06572';
 						reject('No data found for ' + searchBy);
@@ -46,13 +40,12 @@ const SearchMedia = (props) => {
 
 	useEffect(() => {
 		let mediaData;
+		// Call query function and update the state based on the returned info
 		if (mediaState === 'loading') {
 			inputElement.current.style.backgroundColor = 'white';
 			queryTwitch(mediaOption, searchBy, identifier)
 				.then((data) => {
-					console.log('Exit');
 					mediaData = data;
-					console.log(mediaData);
 					mediaArray.current = mediaData;
 					if (mediaArray.current.length === 0) {
 						console.log('User found but no media was returned');
@@ -96,7 +89,7 @@ const SearchMedia = (props) => {
 								<h2 className="center-text">Input name of the {searchBy}</h2>
 								<input
 									value={identifier}
-									className="form-control form-control-lg"
+									className="form-control form-control-lg media-input"
 									ref={inputElement}
 									placeholder={'Input ' + searchBy}
 									onChange={(e) => setIdentifier(e.target.value)}
@@ -113,27 +106,36 @@ const SearchMedia = (props) => {
 								identifier
 							}
 						/>
-						<div className="media-results-div">
-							<MediaHeader streamer="Broadcaster" title="Title" views="Views" />
-							{mediaOption === 'videos'
-								? mediaArray.current.map((media) => (
-										<MediaResult
-											mediaLink={media.url}
-											streamer={media.user_name}
-											title={media.title}
-											views={media.view_count}
-											key={media.id}
-										/>
-								  ))
-								: mediaArray.current.map((media) => (
-										<MediaResult
-											mediaLink={media.url}
-											streamer={media.broadcaster_name}
-											title={media.title}
-											views={media.view_count}
-											key={media.id}
-										/>
-								  ))}
+						<div className="media-data-loaded-div">
+							<MediaResult
+								className="media-header"
+								streamer="Broadcaster"
+								title="Title"
+								views="Views"
+							/>
+							<div className="media-results-div">
+								{mediaOption === 'videos'
+									? mediaArray.current.map((media) => (
+											<MediaResult
+												className="media-clip-result"
+												mediaLink={media.url}
+												streamer={media.user_name}
+												title={media.title}
+												views={media.view_count}
+												key={media.id}
+											/>
+									  ))
+									: mediaArray.current.map((media) => (
+											<MediaResult
+												className="media-clip-result"
+												mediaLink={media.url}
+												streamer={media.broadcaster_name}
+												title={media.title}
+												views={media.view_count}
+												key={media.id}
+											/>
+									  ))}
+							</div>
 						</div>
 					</div>
 				)}

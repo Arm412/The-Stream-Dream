@@ -17,6 +17,7 @@ const Home = (props) => {
 	const dispatch = useDispatch();
 
 	useEffect(() => {
+		// Ping the backend and establish new session if necessary
 		axios
 			.get('http://localhost:3001/', { withCredentials: true })
 			.then((newUser) => {
@@ -57,7 +58,6 @@ const Home = (props) => {
 					)}
 				</div>
 				<div className="holder-div">
-					<div></div>
 					<HomeCard
 						cardHeader="Search for Twitch Channel"
 						cardBody={SearchChannelBody}

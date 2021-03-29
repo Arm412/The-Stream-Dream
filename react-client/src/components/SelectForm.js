@@ -6,7 +6,7 @@ const SelectForm = (props) => {
 			<h2 className="center-text">{props.headerText}</h2>
 			<div className="custom-select-div">
 				<select
-					className="media-select-dropdown"
+					className="media-select-dropdown primary-bg header-color"
 					onChange={(e) => props.setFunction(e.target.value)}
 					value={props.parentVariable}
 				>

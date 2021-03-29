@@ -1,3 +1,9 @@
+:root {
+	--primary-color: #3700b3;
+	--secondary-color: #03dac5;
+	--header-color: #fcfcfc;
+}
+
 html,
 body {
 	font-family: 'Poppins', sans-serif;
@@ -12,8 +18,7 @@ h2,
 h3,
 h4,
 h5 {
-	/*color: #BB86FC;*/
-	color: white;
+	color: var(--header-color);
 }
 
 h1 {
@@ -40,10 +45,13 @@ p {
 	margin: 0;
 }
 
+.primary-bg {
+	background-color: #3700b3;
+}
+
 .home-btn {
 	padding: 0.5rem 0.5rem;
 	border-radius: 5%;
-	background-color: #3700b3;
 	position: absolute;
 	top: 25px;
 	left: 25px;
@@ -129,8 +137,6 @@ p {
 .btn-div {
 	position: relative;
 	z-index: 2;
-	background-color: #3700b3;
-	color: white;
 	width: auto;
 	padding: 10px 20px;
 	margin: 0 10px;
@@ -147,8 +153,6 @@ p {
 	position: relative;
 	display: inline-block;
 	z-index: 2;
-	background-color: #3700b3;
-	color: white;
 	padding: 10px 20px;
 	margin-left: calc(50vw - 89px);
 	border-radius: 25px;
@@ -160,9 +164,10 @@ p {
 
 .btn-div:hover,
 .login-twitch-btn:hover,
-.home-btn:hover {
+.home-btn:hover,
+button:hover {
 	background-color: #6200ee;
-	color: white;
+	color: var(--header-color);
 	cursor: pointer;
 }
 
@@ -218,6 +223,7 @@ p {
 
 .card-body-div {
 	flex: 2;
+	margin-bottom: 2vh;
 }
 
 .center-div {
@@ -234,9 +240,9 @@ p {
 .loader {
 	width: 120px;
 	height: 120px;
-	border: 16px solid #f1f1f1;
+	border: 16px solid var(--header-color);
 	border-radius: 50%;
-	border-top: 16px solid #3700b3;
+	border-top: 16px solid var(--primary-color);
 	-webkit-animation: spin 2s linear infinite; /* Safari */
 	animation: spin 2s linear infinite;
 }
@@ -313,7 +319,7 @@ p {
 }
 
 .game-rank {
-	border-style: solid solid solid solid;
+	border-style: solid;
 	flex: 20%;
 }
 
@@ -409,8 +415,6 @@ p {
 
 .find-channel-btn {
 	padding: 0.75rem 1rem;
-	background-color: #3700b3;
-	color: white;
 	float: right;
 }
 
@@ -442,34 +446,28 @@ p {
 	background-color: rgba(12, 12, 12, 1);
 }
 
-.modal-content > .modal-header {
-	border-bottom: 1px solid #dee2e6;
-}
-
 .modal-body * {
 	font-size: 1.5em;
 }
 
 .text-link:hover {
-	color: white;
+	color: var(--header-color);
 }
 
 .close {
-	color: white;
+	color: var(--header-color);
 }
 
 .close:hover {
 	color: crimson;
+	background-color: inherit;
 }
 
-.nav-container {
-	position: absolute;
-	top: 0;
-	left: 0;
-	width: 300px;
-	height: 100vh;
-	background-color: #121212;
-	color: #bb86fc;
+.modal-channel-body {
+	position: relative;
+	width: 100%;
+	font-size: 1rem;
+	margin-bottom: 5vh;
 }
 
 .nav-header {
@@ -498,7 +496,7 @@ p {
 	box-sizing: content-box;
 	min-height: 30vh;
 	max-height: 30vh;
-	margin: 0 5vw;
+	margin: 0 15vw;
 	justify-content: space-around;
 }
 
@@ -508,32 +506,52 @@ p {
 	border-radius: 2%;
 	max-width: 20vw;
 	min-width: 20vw;
-	margin: 5vh 0;
+	margin: 5vh 0 0 0;
 	padding: 20px 20px;
 	background-color: rgba(12, 12, 12, 0.9);
 	flex: 1;
-	border: solid white 1px;
+	border: solid var(--header-color) 1px;
 }
 
 .custom-select-div {
 	position: relative;
-	margin: 15% 35% 0 35%;
+	margin: 15% 33% 0 33%;
+}
+
+.media-input {
+	position: relative;
+	margin-top: 12%;
+}
+
+.media-data-loaded-div {
+	display: flex;
+	flex-direction: column;
+	margin: 0 15vw;
+	border: solid var(--header-color) 1px;
+	background-color: rgba(12, 12, 12, 0.8);
 }
 
 .media-select-dropdown {
 	width: 100%;
+	min-width: 70px;
 	position: relative;
-	background-color: #3700b3;
-	color: white;
 	border: none;
 }
 
-.media-clip-result,
+.media-clip-result {
+	position: relative;
+	display: flex;
+	max-height: 30px;
+}
+
 .media-header {
 	position: relative;
 	display: flex;
 	max-height: 30px;
-	color: #03dac5;
+}
+
+.media-header p {
+	color: var(--header-color);
 }
 
 .result-column-name {
@@ -549,6 +567,7 @@ p {
 	flex: 3;
 	white-space: nowrap;
 	overflow-x: hidden;
+	text-overflow: ellipsis;
 }
 
 .result-column-views {
@@ -558,30 +577,25 @@ p {
 }
 
 .media-results-div {
-	margin: 0 15vw 5vh 15vw;
-	background-color: rgba(12, 12, 12, 0.8);
-	max-height: 50vh;
+	max-height: 45vh;
 	overflow-y: scroll;
-	border: solid white 1px;
 }
 
 .text-color {
-	color: #03dac5;
+	color: var(--secondary-color);
 }
 
 .header-color {
-	color: white;
+	color: var(--header-color);
 }
 
 .media-clip-result:hover {
 	background-color: rgba(55, 0, 179, 0.6);
-	color: white;
+	color: var(--header-color);
 }
 
 .basic-btn {
 	padding: 0.75rem 1rem;
-	background-color: #3700b3;
-	color: white;
 	width: 10vw;
 	border: none;
 }
@@ -593,5 +607,5 @@ p {
 }
 
 .media-btn-div {
-	margin: 0 45vw;
+	margin: 5vh 45vw 0 45vw;
 }
