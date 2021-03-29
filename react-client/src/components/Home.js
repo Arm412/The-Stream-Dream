@@ -14,6 +14,8 @@ const Home = (props) => {
 		'View the top 20 games currently being streamed on Twitch';
 	const SearchChannelBody =
 		"Search for a Twitch Channel and view it's channel information and captures.";
+	const SearchMediaBody =
+		'Search for Clips and Videos for a specific game or twitch channel broadcaster.';
 	const dispatch = useDispatch();
 
 	useEffect(() => {
@@ -25,8 +27,12 @@ const Home = (props) => {
 				if (newSession) {
 					console.log(newSession);
 					console.log('New session, loggin out');
-					dispatch(logout());
-					localStorage.clear();
+					try {
+						dispatch(logout());
+						localStorage.clear();
+					} catch (e) {
+						console.log(e);
+					}
 				} else {
 					console.log(newSession);
 					console.log('Still logged In');
@@ -72,7 +78,7 @@ const Home = (props) => {
 					/>
 					<HomeCard
 						cardHeader="Search for Stream Clips"
-						cardBody={TopGamesCardBody}
+						cardBody={SearchMediaBody}
 						goToLink="/getMedia"
 						buttonText="Search for Twitch Videos/Clips"
 					/>
