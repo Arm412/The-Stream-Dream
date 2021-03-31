@@ -57,7 +57,7 @@ const FindChannels = (props) => {
 						/>
 					</form>
 					<button
-						className="find-channel-btn header-color primary-bg"
+						className="find-channel-btn text-color primary-bg"
 						onClick={() => {
 							setLoading(true);
 						}}
@@ -87,13 +87,11 @@ const FindChannels = (props) => {
 					</Modal.Header>
 					<Modal.Body className="channel-modal">
 						<div className="modal-channel-body">
-							<p className="header-color">
+							<p className="text-color">
 								Status: {chosenChannel.current.is_live ? 'Live' : 'Offline'}
 							</p>
-							<p className="header-color">
-								Title: {chosenChannel.current.title}
-							</p>
-							<p className="header-color">
+							<p className="text-color">Title: {chosenChannel.current.title}</p>
+							<p className="text-color">
 								Language:{' '}
 								{Languages[chosenChannel.current.broadcaster_language]}
 							</p>
@@ -105,7 +103,7 @@ const FindChannels = (props) => {
 								'https://www.twitch.tv/' + chosenChannel.current.display_name
 							}
 						>
-							<button className="primary-bg header-color">
+							<button className="primary-bg text-color">
 								Visit the channel
 							</button>
 						</a>

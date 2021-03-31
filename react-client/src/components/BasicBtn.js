@@ -6,7 +6,7 @@ const BasicBtn = (props) => {
 			<button
 				onClick={props.onClick}
 				disabled={props.disabled}
-				className="basic-btn header-color primary-bg"
+				className="basic-btn text-color primary-bg"
 			>
 				{props.btnText}
 			</button>

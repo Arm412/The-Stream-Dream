@@ -18,35 +18,10 @@ const Home = (props) => {
 		'Search for Clips and Videos for a specific game or twitch channel broadcaster.';
 	const dispatch = useDispatch();
 
-	useEffect(() => {
-		// Ping the backend and establish new session if necessary
-		axios
-			.get('http://localhost:3001/', { withCredentials: true })
-			.then((newUser) => {
-				let newSession = newUser.data;
-				if (newSession) {
-					console.log(newSession);
-					console.log('New session, loggin out');
-					try {
-						dispatch(logout());
-						localStorage.clear();
-					} catch (e) {
-						console.log(e);
-					}
-				} else {
-					console.log(newSession);
-					console.log('Still logged In');
-				}
-			})
-			.catch((err) => {
-				console.log('Error connecting to server');
-			});
-	}, []);
-
 	return (
 		<>
 			<div className="home-img"></div>
-			<div className="home-img-cover"></div>
+			<div className="container-overlay"></div>
 			<div className="home-div">
 				<div className="welcome-div">
 					{loggedIn ? (

@@ -12,7 +12,7 @@ function App() {
 	return (
 		<Router>
 			<Link to="/">
-				<h2 className="home-btn">TSD</h2>
+				<h2 className="home-btn text-color">TSD</h2>
 			</Link>
 			{loggedIn ? <ProfileDiv /> : null}
 			<Switch>
