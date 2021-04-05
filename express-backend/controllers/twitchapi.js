@@ -134,8 +134,6 @@ exports.getMedia = async (req, res) => {
 	if (req.body.searchBy === 'user') {
 		Helpers.getUserID(req.body.id, AT)
 			.then((userObject) => {
-				console.log(userObject);
-
 				// No user_id was found with the given login
 				if (userObject.length === 0) {
 					const returnObj = {

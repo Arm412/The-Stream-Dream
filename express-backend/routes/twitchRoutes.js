@@ -1,7 +1,8 @@
 const express = require('express');
-router = express.Router();
-twitchAPI = require('../controllers/twitchAPI.js');
-login = require('../controllers/login');
+const router = express.Router();
+const path = require('path');
+const twitchAPI = require(path.resolve('./controllers/twitchapi.js'));
+const login = require(path.resolve('./controllers/login'));
 
 // Paths to query the Twitch API
 

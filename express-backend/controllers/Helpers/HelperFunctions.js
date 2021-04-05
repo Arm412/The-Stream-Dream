@@ -65,7 +65,6 @@ exports.findChannel = (accessToken, user) => {
 				Authorization: 'Bearer ' + accessToken,
 			},
 		};
-		console.log(channelOptions);
 		request.get(channelOptions, (err, res, body) => {
 			if (err) {
 				reject(err);

@@ -5,6 +5,7 @@ require('dotenv').config();
 const twitchAPI = require('./routes/twitchRoutes');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
+let ip = require('ip');
 
 const app = express();
 app.use(
@@ -46,6 +47,7 @@ app.use(cookieParser());
 app.use('/twitch', twitchAPI);
 
 app.get('/', (req, res) => {
+	console.log('Ping');
 	if (!req.session.visited) {
 		console.log('New Session');
 		req.session.visited = true;
@@ -69,5 +71,6 @@ app.use((req, res) => {
 const PORT = process.env.PORT || 3001;
 
 app.listen(PORT, () => {
+	console.log(ip.address());
 	console.log('Listening on Port: ' + PORT);
 });

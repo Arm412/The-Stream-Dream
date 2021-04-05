@@ -52,7 +52,6 @@ const SearchMedia = (props) => {
 						// show no media text
 						setMediaState('input');
 					} else {
-						console.log('Updating media state to display');
 						setMediaState('display');
 					}
 				})

@@ -20,7 +20,6 @@ const FindChannels = (props) => {
 				withCredentials: true,
 			})
 			.then((jsondata) => {
-				console.log(JSON.parse(jsondata.data));
 				channelArray.current = JSON.parse(jsondata.data).data;
 				setLoading(false);
 			})
