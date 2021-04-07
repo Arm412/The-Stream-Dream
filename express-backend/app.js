@@ -5,16 +5,13 @@ require('dotenv').config();
 const twitchAPI = require('./routes/twitchRoutes');
 const session = require('express-session');
 const MongoStore = require('connect-mongo');
+const path = require('path');
 let ip = require('ip');
 
 const app = express();
-app.use(
-	cors({
-		credentials: true,
-		origin: 'http://localhost:3000',
-		methods: ['GET', 'PUT', 'POST'],
-	})
-);
+
+// Serve static files
+app.use(express.static(path.join(__dirname, '..', 'react-client', 'build')));
 
 const dbString = 'mongodb://127.0.0.1:27017/sessionsDB';
 
@@ -46,26 +43,8 @@ app.use(cookieParser());
 
 app.use('/twitch', twitchAPI);
 
-app.get('/', (req, res) => {
-	console.log('Ping');
-	if (!req.session.visited) {
-		console.log('New Session');
-		req.session.visited = true;
-		res.send(true);
-	} else {
-		console.log('Old Session');
-		res.send(false);
-	}
-});
-
-app.use((req, res) => {
-	res.header('Access-Control-Allow-Origin', 'http://localhost:3000/');
-	res.header('Access-Control-Allow-Headers', '*');
-	res.header('Content-Type', 'application/json;charset=UTF-8');
-	res.header('Access-Control-Allow-Credentials', true);
-	if (req.method === 'OPTIONS') {
-		res.header('Access=Control-Allow-Methods', 'PUT, POST, PATCH, DELETE, GET');
-	}
+app.get('*', (req, res) => {
+	res.sendFile(path.join(__dirname, '..', 'react-client/build', 'index.html'));
 });
 
 const PORT = process.env.PORT || 3001;

@@ -15,7 +15,7 @@ const LoggingInPage = () => {
 		const urlParams = new URLSearchParams(window.location.search);
 		if (urlParams.get('code') && !loggedIn) {
 			axios
-				.post('http://localhost:3001/twitch/profileData', {
+				.post('/twitch/profileData', {
 					userCode: urlParams.get('code'),
 					withCredentials: true,
 				})
@@ -25,7 +25,7 @@ const LoggingInPage = () => {
 					if (!loggedIn) {
 						dispatch(login());
 					}
-					window.location.replace('http://localhost:3000/');
+					window.location.replace('/');
 				})
 				.catch((e) => {
 					console.log('Post failed: ' + e);

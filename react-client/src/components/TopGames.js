@@ -27,7 +27,7 @@ const TopGames = (props) => {
 		// Call the backend to query the Top Games API
 		return new Promise((resolve, reject) => {
 			axios
-				.get('http://localhost:3001/twitch/getGames', {
+				.get('/twitch/getGames', {
 					withCredentials: true,
 				})
 				.then((response) => {

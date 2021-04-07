@@ -27,7 +27,9 @@ const persistor = persistStore(myStore);
 
 // Ping backend and determine if this is a new session and logout
 axios
-	.get('http://localhost:3001/', { withCredentials: true })
+	.get('/twitch/checkSession', {
+		withCredentials: true,
+	})
 	.then((newUser) => {
 		let newSession = newUser.data;
 		if (newSession) {

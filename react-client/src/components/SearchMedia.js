@@ -19,7 +19,7 @@ const SearchMedia = (props) => {
 	const queryTwitch = (mediaOption, searchBy, identifier) => {
 		return new Promise((resolve, reject) => {
 			axios
-				.post('http://localhost:3001/twitch/getMedia', {
+				.post('/twitch/getMedia', {
 					id: identifier,
 					mediaOption: mediaOption,
 					searchBy: searchBy,

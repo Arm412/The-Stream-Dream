@@ -28,6 +28,18 @@ const getTopTwitchGames = (accessToken) => {
 	});
 };
 
+exports.checkSession = async (req, res) => {
+	console.log('Ping');
+	if (!req.session.visited) {
+		console.log('New Session');
+		req.session.visited = true;
+		res.send(true);
+	} else {
+		console.log('Old Session');
+		res.send(false);
+	}
+};
+
 // Request Top game data from the Twitch API
 exports.getTopGames = async (req, res) => {
 	let AT = '';

@@ -14,6 +14,8 @@ router.post('/getMedia', twitchAPI.getMedia);
 
 router.post('/profileData', twitchAPI.profileData);
 
+router.get('/checkSession', twitchAPI.checkSession);
+
 // Paths handling logging in with twitch
 
 router.get('/login', login.authorizeLogin);
