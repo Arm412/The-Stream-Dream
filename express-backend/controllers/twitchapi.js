@@ -91,43 +91,6 @@ exports.findChannels = async (req, res) => {
 		});
 };
 
-exports.profileData = async (req, res) => {
-	let UserToken = '';
-	if (!req.session.userToken) {
-		await Helpers.requestToken(req.body.userCode)
-			.then((response) => {
-				req.session.userToken = response;
-				UserToken = response;
-			})
-			.catch((message) => {
-				console.log(message);
-			});
-	} else {
-		UserToken = req.session.userToken;
-	}
-	const getUserOptions = {
-		url: process.env.GET_USERS,
-		method: 'GET',
-		headers: {
-			'Client-ID': process.env.CLIENT_ID,
-			Authorization: 'Bearer ' + UserToken,
-		},
-	};
-	request.get(getUserOptions, (err, response, body) => {
-		if (err) {
-			res.status(response.statusCode).send(body);
-		} else {
-			if (response.statusCode != 200) {
-				console.log('Status: ' + response.statusCode);
-				res.status(response.statusCode).send(body);
-			} else {
-				const userTwitchObject = JSON.parse(body).data[0];
-				res.status(response.statusCode).send(userTwitchObject);
-			}
-		}
-	});
-};
-
 exports.getMedia = async (req, res) => {
 	let AT = '';
 	if (!req.session.accessToken) {

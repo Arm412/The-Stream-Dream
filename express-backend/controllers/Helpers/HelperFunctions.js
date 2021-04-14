@@ -1,57 +1,42 @@
 const request = require('request');
 
-exports.requestToken = (userCode = '') => {
+exports.requestToken = () => {
 	return new Promise((resolve, reject) => {
 		// Request Client access token
-		if (userCode === '') {
-			// Set API options
-			const options = {
-				url: process.env.GET_TOKEN,
-				json: true,
-				body: {
-					client_id: process.env.CLIENT_ID,
-					client_secret: process.env.CLIENT_SECRET,
-					grant_type: 'client_credentials',
-				},
-			};
+		// Set API options
+		const options = {
+			url: process.env.GET_TOKEN,
+			json: true,
+			body: {
+				client_id: process.env.CLIENT_ID,
+				client_secret: process.env.CLIENT_SECRET,
+				grant_type: 'client_credentials',
+			},
+		};
 
-			request.post(options, (err, res, body) => {
-				if (err) {
-					return console.log(err);
-				}
+		request.post(options, (err, res, body) => {
+			if (err) {
+				return console.log(err);
+			}
 
-				if (res.statusCode == 200) {
-					resolve(res.body.access_token);
-				} else {
-					reject(res.statusCode);
-				}
-			});
-		} else {
-			// Request user access token
-			const options = {
-				url: process.env.GET_TOKEN,
-				json: true,
-				body: {
-					client_id: process.env.CLIENT_ID,
-					client_secret: process.env.CLIENT_SECRET,
-					code: userCode,
-					grant_type: 'authorization_code',
-					redirect_uri: process.env.REDIRECT_URI,
-				},
-			};
+			if (res.statusCode == 200) {
+				resolve(res.body.access_token);
+			} else {
+				reject(res.statusCode);
+			}
+		});
 
-			request.post(options, (err, res, body) => {
-				if (err) {
-					return console.log(err);
-				}
+		request.post(options, (err, res, body) => {
+			if (err) {
+				return console.log(err);
+			}
 
-				if (res.statusCode == 200) {
-					resolve(res.body.access_token);
-				} else {
-					reject(res.statusCode);
-				}
-			});
-		}
+			if (res.statusCode == 200) {
+				resolve(res.body.access_token);
+			} else {
+				reject(res.statusCode);
+			}
+		});
 	});
 };
 

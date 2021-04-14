@@ -3,7 +3,6 @@ import React from 'react';
 import HomeCard from './HomeCard';
 import axios from 'axios';
 //import { useSelector, useDispatch } from 'react-redux';
-//import { login, logout } from '../helpers/redux/actions/userLoggedActions';
 
 axios.defaults.withCredentials = true;
 
