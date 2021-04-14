@@ -16,7 +16,7 @@ const FindChannels = (props) => {
 	const queryChannels = () => {
 		// Call the find channel backend api endpoint to query the twitch API
 		axios
-			.get('http://localhost:3001/twitch/findChannels?user=' + channelName, {
+			.get('/twitch/findChannels?user=' + channelName, {
 				withCredentials: true,
 			})
 			.then((jsondata) => {

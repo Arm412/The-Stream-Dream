@@ -1,22 +1,21 @@
 import Header from './Header';
-import React, { useState, useEffect, useRef } from 'react';
+import React from 'react';
 import HomeCard from './HomeCard';
-import LoginBtn from './LoginBtn';
 import axios from 'axios';
-import { useSelector, useDispatch } from 'react-redux';
-import { login, logout } from '../helpers/redux/actions/userLoggedActions';
+//import { useSelector, useDispatch } from 'react-redux';
+//import { login, logout } from '../helpers/redux/actions/userLoggedActions';
 
 axios.defaults.withCredentials = true;
 
 const Home = (props) => {
-	const loggedIn = useSelector((state) => state.isLogged);
+	//const loggedIn = useSelector((state) => state.isLogged);
 	const TopGamesCardBody =
 		'View the top 20 games currently being streamed on Twitch';
 	const SearchChannelBody =
 		"Search for a Twitch Channel and view it's channel information and captures.";
 	const SearchMediaBody =
 		'Search for Clips and Videos for a specific game or twitch channel broadcaster.';
-	const dispatch = useDispatch();
+	//const dispatch = useDispatch();
 
 	return (
 		<>
@@ -24,19 +23,7 @@ const Home = (props) => {
 			<div className="container-overlay"></div>
 			<div className="home-div">
 				<div className="welcome-div">
-					{loggedIn ? (
-						<Header title={'Welcome, ' + localStorage.userTwitchName} />
-					) : (
-						<Header title="Welcome!" />
-					)}
-					{!loggedIn ? (
-						<LoginBtn />
-					) : (
-						<img
-							alt={localStorage.userTwitchName}
-							src={localStorage.twitchUserImg}
-						></img>
-					)}
+					<Header title="Welcome to The Stream Dream!" />
 				</div>
 				<div className="holder-div">
 					<HomeCard

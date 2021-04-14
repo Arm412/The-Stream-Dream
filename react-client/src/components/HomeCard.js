@@ -9,7 +9,7 @@ const HomeCard = (props) => {
 					<h3>{props.cardHeader}</h3>
 				</div>
 				<div className="card-body-div text-color">
-					<p>&emsp; {props.cardBody}</p>
+					<p>{props.cardBody}</p>
 				</div>
 				<div className="card-header-btn">
 					<Link to={props.goToLink}>

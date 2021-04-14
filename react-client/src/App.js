@@ -2,19 +2,16 @@ import TopGames from './components/TopGames';
 import { BrowserRouter as Router, Route, Switch, Link } from 'react-router-dom';
 import Home from './components/Home';
 import FindChannels from './components/FindChannels';
-import ProfileDiv from './components/ProfileDiv';
-import LoggingInPage from './components/LoggingInPage';
 import MediaPage from './components/SearchMedia';
 import { useSelector, useDispatch } from 'react-redux';
 
 function App() {
-	const loggedIn = useSelector((state) => state.isLogged);
+	//const loggedIn = useSelector((state) => state.isLogged);
 	return (
 		<Router>
 			<Link to="/">
 				<h2 className="home-btn text-color">TSD</h2>
 			</Link>
-			{loggedIn ? <ProfileDiv /> : null}
 			<Switch>
 				<Route exact path="/">
 					<Home headerTitle="Welcome!" />
@@ -24,9 +21,6 @@ function App() {
 				</Route>
 				<Route path="/getUser">
 					<FindChannels />
-				</Route>
-				<Route path="/login">
-					<LoggingInPage />
 				</Route>
 				<Route path="/getMedia">
 					<MediaPage />
