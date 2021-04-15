@@ -256,6 +256,15 @@ button:hover {
 	animation: spin 2s linear infinite;
 }
 
+.btn-loader {
+	border: 3px solid rgba(0, 0, 0, 0);
+	border-top: 3px solid #fcfcfc;
+	border-radius: 50%;
+	width: 23px;
+	height: 23px;
+	animation: spin 2s linear infinite;
+}
+
 @keyframes focusHomeDiv {
 	0% {
 		background-color: rgba(12, 12, 12, 0.6);

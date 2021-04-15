@@ -8,7 +8,11 @@ const BasicBtn = (props) => {
 				disabled={props.disabled}
 				className="basic-btn text-color primary-bg"
 			>
-				{props.btnText}
+				{props.state === 'loading' ? (
+					<div className="btn-loader"></div>
+				) : (
+					props.btnText
+				)}
 			</button>
 		</div>
 	);

@@ -192,6 +192,7 @@ const SearchMedia = (props) => {
 						btnText="Search"
 						btnClass="media-btn-div"
 						id="mediaSearchBtn"
+						state={mediaState}
 					/>
 				) : (
 					<BasicBtn
@@ -202,6 +203,7 @@ const SearchMedia = (props) => {
 						btnText="Back to search"
 						btnClass="media-btn-div"
 						id="mediaSearchBtn"
+						state={mediaState}
 					/>
 				)}
 			</div>
