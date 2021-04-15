@@ -2,7 +2,7 @@ import React from 'react';
 
 const BasicBtn = (props) => {
 	return (
-		<div className={props.btnClass}>
+		<div className={props.btnClass} id={props.id}>
 			<button
 				onClick={props.onClick}
 				disabled={props.disabled}
