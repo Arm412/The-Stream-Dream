@@ -626,6 +626,7 @@ button:hover {
 	margin: 50px 0 50px 50%;
 }
 
-.basic-btn:disabled:hover {
+.basic-btn:disabled:hover,
+button:disabled:hover {
 	cursor: not-allowed;
 }

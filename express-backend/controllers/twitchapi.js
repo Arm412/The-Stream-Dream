@@ -66,92 +66,101 @@ exports.getTopGames = async (req, res) => {
 };
 
 exports.findChannels = async (req, res) => {
-	let AT = '';
-	if (!req.session.accessToken) {
-		await Helpers.requestToken()
-			.then((accessToken) => {
-				req.session.accessToken = accessToken;
-				AT = accessToken;
-			})
-			.catch((code) => {
-				console.log('Failed with return code: ' + code);
-			});
+	if (req.query['user'].includes(';') || req.query['user'].includes('*')) {
+		res.sendStatus(500);
 	} else {
-		AT = req.session.accessToken;
-	}
+		let AT = '';
+		if (!req.session.accessToken) {
+			await Helpers.requestToken()
+				.then((accessToken) => {
+					req.session.accessToken = accessToken;
+					AT = accessToken;
+				})
+				.catch((code) => {
+					console.log('Failed with return code: ' + code);
+				});
+		} else {
+			AT = req.session.accessToken;
+		}
 
-	// Get requested user from Twitch API
-	const requestedUser = req.query.user;
-	await Helpers.findChannel(AT, requestedUser)
-		.then((message) => {
-			res.json(message);
-		})
-		.catch((message) => {
-			console.log(message);
-		});
+		// Get requested user from Twitch API
+		const requestedUser = req.query.user;
+		await Helpers.findChannel(AT, requestedUser)
+			.then((message) => {
+				res.json(message);
+			})
+			.catch((message) => {
+				console.log(message);
+				res.status(500);
+			});
+	}
 };
 
 exports.getMedia = async (req, res) => {
-	let AT = '';
-	if (!req.session.accessToken) {
-		await Helpers.requestToken()
-			.then((accessToken) => {
-				req.session.accessToken = accessToken;
-				AT = accessToken;
-			})
-			.catch((code) => {
-				console.log('Failed with return code: ' + code);
-			});
+	if (req.body['id'].includes(';') || req.body['id'].includes('*')) {
+		res.sendStatus(500);
 	} else {
-		AT = req.session.accessToken;
-	}
+		let AT = '';
+		if (!req.session.accessToken) {
+			await Helpers.requestToken()
+				.then((accessToken) => {
+					req.session.accessToken = accessToken;
+					AT = accessToken;
+				})
+				.catch((code) => {
+					console.log('Failed with return code: ' + code);
+				});
+		} else {
+			AT = req.session.accessToken;
+		}
 
-	if (req.body.searchBy === 'user') {
-		Helpers.getUserID(req.body.id, AT)
-			.then((userObject) => {
-				// No user_id was found with the given login
-				if (userObject.length === 0) {
-					const returnObj = {
-						notFound: true,
-						data: 'Unable to find user with given login.',
-					};
-					res.send(returnObj);
-				} else {
-					if (req.body.mediaOption === 'videos') {
-						return Helpers.getVideos(userObject[0].id, req.body.searchBy, AT);
+		if (req.body.searchBy === 'user') {
+			Helpers.getUserID(req.body.id, AT)
+				.then((userObject) => {
+					// No user_id was found with the given login
+					if (userObject.length === 0) {
+						const returnObj = {
+							notFound: true,
+							data: 'Unable to find user with given login.',
+						};
+						res.send(returnObj);
 					} else {
-						return Helpers.getClips(userObject[0].id, req.body.searchBy, AT);
+						if (req.body.mediaOption === 'videos') {
+							return Helpers.getVideos(userObject[0].id, req.body.searchBy, AT);
+						} else {
+							return Helpers.getClips(userObject[0].id, req.body.searchBy, AT);
+						}
 					}
-				}
-			})
-			.then((ret) => {
-				res.send(ret);
-			})
-			.catch((err) => {
-				console.log(err);
-			});
-	} else {
-		Helpers.getGameID(req.body.id, AT)
-			.then((gameObject) => {
-				if (gameObject.length === 0) {
-					const returnObj = {
-						notFound: true,
-						data: 'Unable to find game with given name.',
-					};
-					res.send(returnObj);
-				} else {
-					if (req.body.mediaOption === 'videos') {
-						return Helpers.getVideos(gameObject[0].id, req.body.searchBy, AT);
+				})
+				.then((ret) => {
+					res.send(ret);
+				})
+				.catch((err) => {
+					console.log(err);
+				});
+		} else {
+			Helpers.getGameID(req.body.id, AT)
+				.then((gameObject) => {
+					if (gameObject.length === 0) {
+						const returnObj = {
+							notFound: true,
+							data: 'Unable to find game with given name.',
+						};
+						res.send(returnObj);
 					} else {
-						return Helpers.getClips(gameObject[0].id, req.body.searchBy, AT);
+						if (req.body.mediaOption === 'videos') {
+							return Helpers.getVideos(gameObject[0].id, req.body.searchBy, AT);
+						} else {
+							return Helpers.getClips(gameObject[0].id, req.body.searchBy, AT);
+						}
 					}
-				}
-			})
-			.then((ret) => {
-				res.send(ret);
-			})
-			.catch((err) => {
-				console.log(err);
-			});
+				})
+				.then((ret) => {
+					res.send(ret);
+				})
+				.catch((err) => {
+					console.log(err);
+				});
+		}
 	}
 };
