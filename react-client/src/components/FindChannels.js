@@ -12,6 +12,7 @@ const FindChannels = (props) => {
 	const channelArray = useRef([]);
 	const channelList = useRef();
 	const chosenChannel = useRef('');
+	const invalid = useRef(false);
 
 	const queryChannels = () => {
 		// Call the find channel backend api endpoint to query the twitch API
@@ -25,6 +26,8 @@ const FindChannels = (props) => {
 			})
 			.catch((message) => {
 				console.log(message);
+				invalid.current = true;
+				setLoading(false);
 			});
 	};
 
@@ -58,11 +61,16 @@ const FindChannels = (props) => {
 					<button
 						className="find-channel-btn text-color primary-bg"
 						onClick={() => {
+							invalid.current = false;
 							setLoading(true);
 						}}
+						disabled={channelName === ''}
 					>
-						Search
+						{!loading ? 'Search' : <div className="btn-loader"></div>}
 					</button>
+					{invalid.current === true ? (
+						<p className="red">Invalid Input</p>
+					) : null}
 				</div>
 				{!loading && channelArray.current.length !== 0 ? (
 					<div className="channel-container" ref={channelList}>

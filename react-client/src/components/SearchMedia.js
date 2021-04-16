@@ -14,6 +14,8 @@ const SearchMedia = (props) => {
 	const [mediaState, setMediaState] = useState('input');
 	const inputElement = useRef();
 	const mediaArray = useRef();
+	const noData = useRef(false);
+	const doesntExist = useRef(false);
 
 	// Query the media from the twitch api by posting to the /twitch/getMedia endpoint
 	const queryTwitch = (mediaOption, searchBy, identifier) => {
@@ -26,7 +28,6 @@ const SearchMedia = (props) => {
 				})
 				.then((returnData) => {
 					if (returnData.data.notFound) {
-						inputElement.current.style.backgroundColor = '#c06572';
 						reject('No data found for ' + searchBy);
 					} else {
 						resolve(returnData.data);
@@ -39,16 +40,24 @@ const SearchMedia = (props) => {
 	};
 
 	useEffect(() => {
+		inputElement.current.style.backgroundColor = 'white';
+	}, [mediaOption, searchBy]);
+
+	useEffect(() => {
 		let mediaData;
+		noData.current = false;
+		doesntExist.current = false;
 		// Call query function and update the state based on the returned info
 		if (mediaState === 'loading') {
-			inputElement.current.style.backgroundColor = 'white';
+			doesntExist.current = false;
+			noData.current = false;
 			queryTwitch(mediaOption, searchBy, identifier)
 				.then((data) => {
 					mediaData = data;
 					mediaArray.current = mediaData;
 					if (mediaArray.current.length === 0) {
 						console.log('User found but no media was returned');
+						noData.current = true;
 						// show no media text
 						setMediaState('input');
 					} else {
@@ -57,10 +66,33 @@ const SearchMedia = (props) => {
 				})
 				.catch((err) => {
 					console.log(err);
+					doesntExist.current = true;
+					inputElement.current.style.backgroundColor = '#c06572';
 					setMediaState('input');
 				});
 		}
 	}, [mediaState]);
+
+	useEffect(() => {
+		noData.current = false;
+		if (document.getElementById('mediaSearchBtn')) {
+			if (identifier === '') {
+				document
+					.getElementById('mediaSearchBtn')
+					.classList.add('restrict-click');
+			} else {
+				if (
+					document
+						.getElementById('mediaSearchBtn')
+						.classList.contains('restrict-click')
+				) {
+					document
+						.getElementById('mediaSearchBtn')
+						.classList.remove('restrict-click');
+				}
+			}
+		}
+	}, [identifier]);
 
 	return (
 		<div className="find-media-container">
@@ -91,8 +123,21 @@ const SearchMedia = (props) => {
 									className="form-control form-control-lg media-input"
 									ref={inputElement}
 									placeholder={'Input ' + searchBy}
-									onChange={(e) => setIdentifier(e.target.value)}
+									onChange={(e) => {
+										inputElement.current.style.backgroundColor = 'white';
+										setIdentifier(e.target.value);
+									}}
 								/>
+								{noData.current ? (
+									<p className="center-text caution">
+										This {searchBy} has no {mediaOption}
+									</p>
+								) : null}
+								{doesntExist.current ? (
+									<p className="center-text red">
+										This {searchBy} does not exist
+									</p>
+								) : null}
 							</form>
 						</div>
 					</div>
@@ -146,6 +191,8 @@ const SearchMedia = (props) => {
 						disabled={identifier === ''}
 						btnText="Search"
 						btnClass="media-btn-div"
+						id="mediaSearchBtn"
+						state={mediaState}
 					/>
 				) : (
 					<BasicBtn
@@ -155,6 +202,8 @@ const SearchMedia = (props) => {
 						disabled={false}
 						btnText="Back to search"
 						btnClass="media-btn-div"
+						id="mediaSearchBtn"
+						state={mediaState}
 					/>
 				)}
 			</div>
