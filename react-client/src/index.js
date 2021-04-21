@@ -11,11 +11,16 @@ import storage from 'redux-persist/lib/storage';
 import allReducers from './helpers/redux/reducers/index';
 import { Provider } from 'react-redux';
 import axios from 'axios';
+require('dotenv').config();
 
 const persistConfig = {
 	key: 'root',
 	storage,
 };
+
+if (process.env.REACT_APP_BUILD_ENV === 'DEBUG') {
+	console.log('In debug mode');
+}
 
 const persistedReducer = persistReducer(persistConfig, allReducers);
 

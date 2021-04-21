@@ -25,7 +25,9 @@ const FindChannels = (props) => {
 				setLoading(false);
 			})
 			.catch((message) => {
-				console.log(message);
+				if (process.env.REACT_APP_BUILD_ENV === 'DEBUG') {
+					console.log(message);
+				}
 				invalid.current = true;
 				setLoading(false);
 			});

@@ -3,7 +3,7 @@ import React from 'react';
 const SelectForm = (props) => {
 	return (
 		<form className={props.formClass}>
-			<h2 className="center-text">{props.headerText}</h2>
+			<h3 className="center-text">{props.headerText}</h3>
 			<div className="custom-select-div">
 				<select
 					className="media-select-dropdown primary-bg text-color"
