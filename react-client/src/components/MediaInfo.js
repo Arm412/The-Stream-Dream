@@ -2,13 +2,13 @@ import React, { useState, useEffect, useRef } from 'react';
 import BasicBtn from './BasicBtn';
 
 const MediaInfo = (props) => {
+	// Update the duration to a string if necessary
 	const getDurationString = (duration) => {
 		if (typeof duration === 'string') {
 			return duration;
 		} else {
 			let minutes = Math.floor(duration / 60) + 'm';
 			let seconds = parseInt(duration % 60) + 's';
-			console.log(minutes + seconds);
 			return minutes + seconds;
 		}
 	};

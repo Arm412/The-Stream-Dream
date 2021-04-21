@@ -13,7 +13,7 @@ const SearchMedia = (props) => {
 	const [mediaOption, setMediaOption] = useState('videos');
 	const [searchBy, setSearchBy] = useState('game');
 	const [mediaState, setMediaState] = useState('input');
-	const [showActive, setShowActive] = useState(false);
+	const [showActive, setShowActive] = useState('');
 	const inputElement = useRef();
 	const mediaArray = useRef();
 	const noData = useRef(false);
@@ -22,12 +22,20 @@ const SearchMedia = (props) => {
 
 	// Update all of the game img urls to include a height and width
 	const updateImages = (thumbnailURL) => {
+		// Return empty string if no url is specified
 		if (thumbnailURL === '') {
 			return '';
 		}
-		let cutoff = thumbnailURL.indexOf('%{width');
-		thumbnailURL = thumbnailURL.substring(0, cutoff) + '720x1280.jpg';
-		return thumbnailURL;
+
+		// Update the img size
+		if (thumbnailURL.indexOf('%{width') > 0) {
+			let cutoff = thumbnailURL.indexOf('%{width');
+			thumbnailURL = thumbnailURL.substring(0, cutoff) + '720x1280.jpg';
+			return thumbnailURL;
+		} else {
+			// Return if this url has already updated its size
+			return thumbnailURL;
+		}
 	};
 
 	// Query the media from the twitch api by posting to the /twitch/getMedia endpoint
@@ -43,9 +51,6 @@ const SearchMedia = (props) => {
 					if (returnData.data.notFound) {
 						reject('No data found for ' + searchBy);
 					} else {
-						if (process.env.REACT_APP_BUILD_ENV === 'DEBUG') {
-							console.log(returnData.data);
-						}
 						resolve(returnData.data);
 					}
 				})
@@ -94,8 +99,8 @@ const SearchMedia = (props) => {
 		}
 
 		// Hide the media data container when in different state
-		if (showActive && mediaState !== 'display') {
-			setShowActive(false);
+		if (showActive !== '' && mediaState !== 'display') {
+			setShowActive('');
 		}
 	}, [mediaState]);
 
@@ -195,7 +200,7 @@ const SearchMedia = (props) => {
 															media['thumbnail_url']
 														);
 														activeMedia.current = media;
-														setShowActive(true);
+														setShowActive(media['id']);
 													}}
 													className="media-clip-result"
 													mediaLink={media.url}
@@ -209,7 +214,7 @@ const SearchMedia = (props) => {
 												<MediaResult
 													onclick={() => {
 														activeMedia.current = media;
-														setShowActive(true);
+														setShowActive(media['id']);
 													}}
 													className="media-clip-result"
 													mediaLink={media.url}
