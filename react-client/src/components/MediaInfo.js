@@ -2,6 +2,17 @@ import React, { useState, useEffect, useRef } from 'react';
 import BasicBtn from './BasicBtn';
 
 const MediaInfo = (props) => {
+	const getDurationString = (duration) => {
+		if (typeof duration === 'string') {
+			return duration;
+		} else {
+			let minutes = Math.floor(duration / 60) + 'm';
+			let seconds = parseInt(duration % 60) + 's';
+			console.log(minutes + seconds);
+			return minutes + seconds;
+		}
+	};
+
 	return (
 		<div className="media-details flex-container flex-box-1">
 			{props.media['thumbnail_url'] === '' ? (
@@ -60,7 +71,9 @@ const MediaInfo = (props) => {
 					<p className="header-color">Views: &nbsp; </p>
 					<p className="center-text white">{props.media['view_count']}</p>
 					<p className="header-color">&nbsp; Duration: &nbsp; </p>
-					<p className="center-text white">{props.media['duration']}</p>
+					<p className="center-text white">
+						{getDurationString(props.media['duration'])}
+					</p>
 				</div>
 
 				<BasicBtn
