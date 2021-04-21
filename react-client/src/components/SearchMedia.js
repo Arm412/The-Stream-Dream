@@ -221,7 +221,12 @@ const SearchMedia = (props) => {
 										  ))}
 								</div>
 							</div>
-							{showActive ? <MediaInfo media={activeMedia.current} /> : null}
+							{showActive ? (
+								<MediaInfo
+									media={activeMedia.current}
+									mediaType={mediaOption}
+								/>
+							) : null}
 						</div>
 					</div>
 				)}

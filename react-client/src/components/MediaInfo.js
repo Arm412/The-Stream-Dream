@@ -7,11 +7,17 @@ const MediaInfo = (props) => {
 			{props.media['thumbnail_url'] === '' ? (
 				<div className="no-thumbnail"></div>
 			) : (
-				<div className="info-thumbnail-clip">
+				<div
+					className={
+						props.mediaType === 'videos' ? 'video-thumbnail' : 'clip-thumbnail'
+					}
+				>
 					<img
 						alt={props.media['thumbnail_url']}
 						src={props.media['thumbnail_url']}
-						className="info-img-div"
+						className={
+							props.mediaType === 'videos' ? 'vid-img-div' : 'clip-img-div'
+						}
 					></img>
 				</div>
 			)}
@@ -22,16 +28,33 @@ const MediaInfo = (props) => {
 					<p className="desc-text">{props.media['title']}</p>
 				</div>
 				<div className="flex-container desc-height">
-					<p className="header-color">Description: &nbsp; </p>
-					<p className="desc-text">
-						{props.media['description'] !== ''
-							? props.media['description']
-							: 'No description provided'}
-					</p>
+					{props.mediaType === 'videos' ? (
+						<>
+							<p className="header-color">Description: &nbsp; </p>
+							<p className="desc-text">
+								{props.media['description'] !== ''
+									? props.media['description']
+									: 'No description provided'}
+							</p>
+						</>
+					) : (
+						<>
+							<p className="header-color">Clip ID: &nbsp; </p>
+							<p className="desc-text">
+								{props.media['id'] !== ''
+									? props.media['id']
+									: 'No ID provided'}
+							</p>
+						</>
+					)}
 				</div>
 				<div className="flex-container">
 					<p className="header-color">Twitch User: &nbsp; </p>
-					<p className="center-text white">{props.media['user_name']}</p>
+					<p className="center-text white">
+						{props.mediaType === 'videos'
+							? props.media['user_name']
+							: props.media['broadcaster_name']}
+					</p>
 				</div>
 				<div className="flex-container desc-height">
 					<p className="header-color">Views: &nbsp; </p>
