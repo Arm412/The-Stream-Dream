@@ -184,7 +184,7 @@ const SearchMedia = (props) => {
 							}
 						/>
 						<div className="flex-container flex-wrap auto-margin no-overflow">
-							<div className="media-data-loaded-div flex-box-1">
+							<div className="media-data-loaded-div flex-animate-item flex-box-1">
 								<MediaResult
 									className="media-header"
 									streamer="Broadcaster"

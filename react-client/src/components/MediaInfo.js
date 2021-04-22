@@ -13,8 +13,21 @@ const MediaInfo = (props) => {
 		}
 	};
 
+	useEffect(() => {
+		// Add flex class
+		if (
+			!document
+				.getElementsByClassName('media-details')[0]
+				.classList.contains('slide')
+		) {
+			document
+				.getElementsByClassName('media-details')[0]
+				.classList.add('slide');
+		}
+	}, []);
+
 	return (
-		<div className="media-details flex-container flex-box-1">
+		<div className="flex-container media-details flex-animate-item">
 			{props.media['thumbnail_url'] === '' ? (
 				<div className="no-thumbnail"></div>
 			) : (
