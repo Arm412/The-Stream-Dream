@@ -4,6 +4,7 @@ import axios from 'axios';
 import SelectForm from './SelectForm';
 import MediaResult from './MediaResult';
 import BasicBtn from './BasicBtn';
+import MediaInfo from './MediaInfo';
 
 axios.defaults.withCredentials = true;
 
@@ -12,10 +13,30 @@ const SearchMedia = (props) => {
 	const [mediaOption, setMediaOption] = useState('videos');
 	const [searchBy, setSearchBy] = useState('game');
 	const [mediaState, setMediaState] = useState('input');
+	const [showActive, setShowActive] = useState('');
 	const inputElement = useRef();
 	const mediaArray = useRef();
 	const noData = useRef(false);
 	const doesntExist = useRef(false);
+	const activeMedia = useRef();
+
+	// Update all of the game img urls to include a height and width
+	const updateImages = (thumbnailURL) => {
+		// Return empty string if no url is specified
+		if (thumbnailURL === '') {
+			return '';
+		}
+
+		// Update the img size
+		if (thumbnailURL.indexOf('%{width') > 0) {
+			let cutoff = thumbnailURL.indexOf('%{width');
+			thumbnailURL = thumbnailURL.substring(0, cutoff) + '720x1280.jpg';
+			return thumbnailURL;
+		} else {
+			// Return if this url has already updated its size
+			return thumbnailURL;
+		}
+	};
 
 	// Query the media from the twitch api by posting to the /twitch/getMedia endpoint
 	const queryTwitch = (mediaOption, searchBy, identifier) => {
@@ -55,6 +76,11 @@ const SearchMedia = (props) => {
 				.then((data) => {
 					mediaData = data;
 					mediaArray.current = mediaData;
+
+					if (process.env.REACT_APP_BUILD_ENV === 'DEBUG') {
+						console.log(mediaData);
+					}
+
 					if (mediaArray.current.length === 0) {
 						console.log('User found but no media was returned');
 						noData.current = true;
@@ -70,6 +96,11 @@ const SearchMedia = (props) => {
 					inputElement.current.style.backgroundColor = '#c06572';
 					setMediaState('input');
 				});
+		}
+
+		// Hide the media data container when in different state
+		if (showActive !== '' && mediaState !== 'display') {
+			setShowActive('');
 		}
 	}, [mediaState]);
 
@@ -101,7 +132,7 @@ const SearchMedia = (props) => {
 				{mediaState === 'input' || mediaState === 'loading' ? (
 					<div>
 						<Header title="Search for Clips and Videos!" />
-						<div className="media-form-container flex-div">
+						<div className="media-form-container flex-container">
 							<SelectForm
 								formClass="media-select-form"
 								headerText="Select type of media"
@@ -111,13 +142,15 @@ const SearchMedia = (props) => {
 							/>
 							<SelectForm
 								formClass="media-select-form"
-								headerText={'Search the ' + mediaOption + ' by'}
+								headerText={'Filter the ' + mediaOption + ' by'}
 								setFunction={setSearchBy}
 								parentVariable={searchBy}
 								selectOptions={['Game', 'User']}
 							/>
 							<form className="media-input-form">
-								<h2 className="center-text">Input name of the {searchBy}</h2>
+								<h2 className="center-text">
+									Input the name of the {searchBy}
+								</h2>
 								<input
 									value={identifier}
 									className="form-control form-control-lg media-input"
@@ -150,36 +183,55 @@ const SearchMedia = (props) => {
 								identifier
 							}
 						/>
-						<div className="media-data-loaded-div">
-							<MediaResult
-								className="media-header"
-								streamer="Broadcaster"
-								title="Title"
-								views="Views"
-							/>
-							<div className="media-results-div">
-								{mediaOption === 'videos'
-									? mediaArray.current.map((media) => (
-											<MediaResult
-												className="media-clip-result"
-												mediaLink={media.url}
-												streamer={media.user_name}
-												title={media.title}
-												views={media.view_count}
-												key={media.id}
-											/>
-									  ))
-									: mediaArray.current.map((media) => (
-											<MediaResult
-												className="media-clip-result"
-												mediaLink={media.url}
-												streamer={media.broadcaster_name}
-												title={media.title}
-												views={media.view_count}
-												key={media.id}
-											/>
-									  ))}
+						<div className="flex-container flex-wrap auto-margin no-overflow">
+							<div className="media-data-loaded-div flex-animate-item flex-box-1">
+								<MediaResult
+									className="media-header"
+									streamer="Broadcaster"
+									title="Title"
+									views="Views"
+								/>
+								<div className="media-results-div">
+									{mediaOption === 'videos'
+										? mediaArray.current.map((media) => (
+												<MediaResult
+													onclick={() => {
+														media['thumbnail_url'] = updateImages(
+															media['thumbnail_url']
+														);
+														activeMedia.current = media;
+														setShowActive(media['id']);
+													}}
+													className="media-clip-result"
+													mediaLink={media.url}
+													streamer={media.user_name}
+													title={media.title}
+													views={media.view_count}
+													key={media.id}
+												/>
+										  ))
+										: mediaArray.current.map((media) => (
+												<MediaResult
+													onclick={() => {
+														activeMedia.current = media;
+														setShowActive(media['id']);
+													}}
+													className="media-clip-result"
+													mediaLink={media.url}
+													streamer={media.broadcaster_name}
+													title={media.title}
+													views={media.view_count}
+													key={media.id}
+												/>
+										  ))}
+								</div>
 							</div>
+							{showActive ? (
+								<MediaInfo
+									media={activeMedia.current}
+									mediaType={mediaOption}
+								/>
+							) : null}
 						</div>
 					</div>
 				)}
