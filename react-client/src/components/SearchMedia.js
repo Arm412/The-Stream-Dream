@@ -130,134 +130,150 @@ const SearchMedia = (props) => {
 			<div className="container-overlay"></div>
 			<div className="pop-out">
 				{mediaState === 'input' || mediaState === 'loading' ? (
-					<div>
-						<Header title="Search for Clips and Videos!" />
-						<div className="media-form-container flex-container">
-							<SelectForm
-								formClass="media-select-form"
-								headerText="Select type of media"
-								setFunction={setMediaOption}
-								parentVariable={mediaOption}
-								selectOptions={['Videos', 'Clips']}
-							/>
-							<SelectForm
-								formClass="media-select-form"
-								headerText={'Filter the ' + mediaOption + ' by'}
-								setFunction={setSearchBy}
-								parentVariable={searchBy}
-								selectOptions={['Game', 'User']}
-							/>
-							<form className="media-input-form">
-								<h2 className="center-text">
-									Input the name of the {searchBy}
-								</h2>
-								<input
-									value={identifier}
-									className="form-control form-control-lg media-input"
-									ref={inputElement}
-									placeholder={'Input ' + searchBy}
-									onChange={(e) => {
-										inputElement.current.style.backgroundColor = 'white';
-										setIdentifier(e.target.value);
-									}}
-								/>
-								{noData.current ? (
-									<p className="center-text caution">
-										This {searchBy} has no {mediaOption}
-									</p>
-								) : null}
-								{doesntExist.current ? (
-									<p className="center-text red">
-										This {searchBy} does not exist
-									</p>
-								) : null}
-							</form>
-						</div>
-					</div>
+					<Header title="Search for Clips and Videos!" />
 				) : (
-					<div>
-						<Header
-							title={
-								(mediaOption === 'videos' ? 'Video' : 'Clip') +
-								' results for ' +
-								identifier
-							}
-						/>
-						<div className="flex-container flex-wrap auto-margin no-overflow">
-							<div className="media-data-loaded-div flex-animate-item flex-box-1">
-								<MediaResult
-									className="media-header"
-									streamer="Broadcaster"
-									title="Title"
-									views="Views"
-								/>
-								<div className="media-results-div">
-									{mediaOption === 'videos'
-										? mediaArray.current.map((media) => (
-												<MediaResult
-													onclick={() => {
-														media['thumbnail_url'] = updateImages(
-															media['thumbnail_url']
-														);
-														activeMedia.current = media;
-														setShowActive(media['id']);
-													}}
-													className="media-clip-result"
-													mediaLink={media.url}
-													streamer={media.user_name}
-													title={media.title}
-													views={media.view_count}
-													key={media.id}
-												/>
-										  ))
-										: mediaArray.current.map((media) => (
-												<MediaResult
-													onclick={() => {
-														activeMedia.current = media;
-														setShowActive(media['id']);
-													}}
-													className="media-clip-result"
-													mediaLink={media.url}
-													streamer={media.broadcaster_name}
-													title={media.title}
-													views={media.view_count}
-													key={media.id}
-												/>
-										  ))}
-								</div>
+					<Header
+						title={
+							(mediaOption === 'videos' ? 'Video' : 'Clip') +
+							' results for ' +
+							identifier
+						}
+					/>
+				)}
+				<div className="dark-bg dark-div">
+					{mediaState === 'input' || mediaState === 'loading' ? (
+						<>
+							<div>
+								<p className="center-text">
+									Every Twitch streamer has the ability to save their streams
+									publicly on their profile for others to view. They can archive
+									their entire stream, or they can save shorter videos. Viewers
+									also have the ability to save short clips from the stream
+									which is also saved on the channel. On this page, a user can
+									enter in a streamer and view their clips and videos! The user
+									can also search for clips/videos based on a specific game.
+								</p>
 							</div>
-							{showActive ? (
-								<MediaInfo
-									media={activeMedia.current}
-									mediaType={mediaOption}
+							<div className="media-form-container flex-container">
+								<SelectForm
+									formClass="media-select-form"
+									headerText="Select type of media"
+									setFunction={setMediaOption}
+									parentVariable={mediaOption}
+									selectOptions={['Videos', 'Clips']}
 								/>
-							) : null}
-						</div>
-					</div>
-				)}
-				{mediaState === 'input' || mediaState === 'loading' ? (
-					<BasicBtn
-						onClick={() => {
-							setMediaState('loading');
-						}}
-						disabled={identifier === ''}
-						btnText="Search"
-						btnClass="media-btn-div"
-						id="mediaSearchBtn"
-						state={mediaState}
-					/>
-				) : (
-					<BasicBtn
-						onClick={() => {
-							setMediaState('input');
-						}}
-						disabled={false}
-						btnText="Back to search"
-						btnClass="media-btn-div"
-						id="mediaSearchBtn"
-						state={mediaState}
-					/>
-				)}
+								<SelectForm
+									formClass="media-select-form"
+									headerText={'Filter the ' + mediaOption + ' by'}
+									setFunction={setSearchBy}
+									parentVariable={searchBy}
+									selectOptions={['Game', 'User']}
+								/>
+								<form className="media-input-form">
+									<h2 className="center-text">
+										Input the name of the {searchBy}
+									</h2>
+									<input
+										value={identifier}
+										className="form-control form-control-lg media-input"
+										ref={inputElement}
+										placeholder={'Input ' + searchBy}
+										onChange={(e) => {
+											inputElement.current.style.backgroundColor = 'white';
+											setIdentifier(e.target.value);
+										}}
+									/>
+									{noData.current ? (
+										<p className="center-text caution">
+											This {searchBy} has no {mediaOption}
+										</p>
+									) : null}
+									{doesntExist.current ? (
+										<p className="center-text red">
+											This {searchBy} does not exist
+										</p>
+									) : null}
+								</form>
+							</div>
+						</>
+					) : (
+						<>
+							<div className="flex-container flex-wrap auto-margin no-overflow">
+								<div className="media-data-loaded-div flex-animate-item flex-box-1">
+									<MediaResult
+										className="media-header"
+										streamer="Broadcaster"
+										title="Title"
+										views="Views"
+									/>
+									<div className="media-results-div">
+										{mediaOption === 'videos'
+											? mediaArray.current.map((media) => (
+													<MediaResult
+														onclick={() => {
+															media['thumbnail_url'] = updateImages(
+																media['thumbnail_url']
+															);
+															activeMedia.current = media;
+															setShowActive(media['id']);
+														}}
+														className="media-clip-result"
+														mediaLink={media.url}
+														streamer={media.user_name}
+														title={media.title}
+														views={media.view_count}
+														key={media.id}
+													/>
+											  ))
+											: mediaArray.current.map((media) => (
+													<MediaResult
+														onclick={() => {
+															activeMedia.current = media;
+															setShowActive(media['id']);
+														}}
+														className="media-clip-result"
+														mediaLink={media.url}
+														streamer={media.broadcaster_name}
+														title={media.title}
+														views={media.view_count}
+														key={media.id}
+													/>
+											  ))}
+									</div>
+								</div>
+								{showActive ? (
+									<MediaInfo
+										media={activeMedia.current}
+										mediaType={mediaOption}
+									/>
+								) : null}
+							</div>
+						</>
+					)}
+					{mediaState === 'input' || mediaState === 'loading' ? (
+						<BasicBtn
+							onClick={() => {
+								setMediaState('loading');
+							}}
+							disabled={identifier === ''}
+							btnText="Search"
+							btnClass="media-btn-div"
+							id="mediaSearchBtn"
+							state={mediaState}
+						/>
+					) : (
+						<BasicBtn
+							onClick={() => {
+								setMediaState('input');
+							}}
+							disabled={false}
+							btnText="Back to search"
+							btnClass="media-btn-div"
+							id="mediaSearchBtn"
+							state={mediaState}
+						/>
+					)}
+				</div>
 			</div>
 		</div>
 	);

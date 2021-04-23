@@ -71,6 +71,17 @@ p {
 	background-color: #3700b3;
 }
 
+.dark-bg {
+	background-color: rgba(12, 12, 12, 0.6);
+}
+
+.dark-div {
+	position: relative;
+	padding: 25px;
+	margin: 5px;
+	height: 100%;
+}
+
 .home-btn {
 	padding: 0.25rem 0.25rem;
 	border-radius: 5%;
@@ -149,13 +160,13 @@ p {
 	position: relative;
 	z-index: 2;
 	align-items: center;
-	padding: 10vh 3vw 2vh 3vw;
+	padding: 10vh 5vw 5vh 5vw;
 	text-align: center;
 	color: var(--text-color);
 }
 
 .header-font-size {
-	font-size: calc(10px + 6vw);
+	font-size: calc(10px + 6vmin);
 }
 
 .btn-div {
@@ -414,7 +425,7 @@ button:hover {
 	width: 400px;
 	height: 50px;
 	margin-left: calc(50% - 200px);
-	margin-bottom: 2%;
+	margin-top: 2%;
 }
 
 .input-div form {
@@ -427,6 +438,7 @@ button:hover {
 	width: 450px;
 	height: 500px;
 	margin-left: calc(50% - 225px);
+	margin-top: 2%;
 	overflow-y: scroll;
 	background-color: rgba(12, 12, 12, 0.6);
 }

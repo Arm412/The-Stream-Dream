@@ -17,7 +17,7 @@ function App() {
 					<Home headerTitle="Welcome!" />
 				</Route>
 				<Route path="/getGames">
-					<TopGames headerTitle="Top Viewed Games on Twitch Currently" />
+					<TopGames headerTitle="Top Viewed Games Currently on Twitch" />
 				</Route>
 				<Route path="/getUser">
 					<FindChannels />

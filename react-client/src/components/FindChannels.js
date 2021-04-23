@@ -50,44 +50,49 @@ const FindChannels = (props) => {
 			<div className="container-overlay"></div>
 			<div className="pop-out">
 				<Header title="Find a Twitch Channel" />
-				<div className="input-div pop-out">
-					<form>
-						<input
-							value={channelName}
-							className="form-control form-control-lg"
-							id="channelName"
-							placeholder="Input Twitch Channel Name"
-							onChange={(e) => setChannelName(e.target.value)}
-						/>
-					</form>
-					<button
-						className="find-channel-btn text-color primary-bg"
-						onClick={() => {
-							invalid.current = false;
-							setLoading(true);
-						}}
-						disabled={channelName === ''}
-					>
-						{!loading ? 'Search' : <div className="btn-loader"></div>}
-					</button>
-					{invalid.current === true ? (
-						<p className="red">Invalid Input</p>
+				<div className="dark-bg dark-div">
+					<p className="center-text">
+						Search for Twitch streamers who have actively been streaming. Users
+						who have not streamed within the past 6 months will not be found.
+					</p>
+					<div className="input-div pop-out">
+						<form>
+							<input
+								value={channelName}
+								className="form-control form-control-lg"
+								id="channelName"
+								placeholder="Input Twitch Channel Name"
+								onChange={(e) => setChannelName(e.target.value)}
+							/>
+						</form>
+						<button
+							className="find-channel-btn text-color primary-bg"
+							onClick={() => {
+								invalid.current = false;
+								setLoading(true);
+							}}
+							disabled={channelName === ''}
+						>
+							{!loading ? 'Search' : <div className="btn-loader"></div>}
+						</button>
+						{invalid.current === true ? (
+							<p className="red">Invalid Input</p>
+						) : null}
+					</div>
+
+					{!loading && channelArray.current.length !== 0 ? (
+						<div className="channel-container" ref={channelList}>
+							{channelArray.current.map((channel) => (
+								<ChannelItem
+									key={channel.display_name}
+									displayName={channel.display_name}
+									profileImg={channel.thumbnail_url}
+									onClick={() => setActiveChannel(channel)}
+								/>
+							))}
+						</div>
 					) : null}
 				</div>
-				{!loading && channelArray.current.length !== 0 ? (
-					<div className="channel-container" ref={channelList}>
-						{channelArray.current.map((channel) => (
-							<ChannelItem
-								key={channel.display_name}
-								displayName={channel.display_name}
-								profileImg={channel.thumbnail_url}
-								onClick={() => setActiveChannel(channel)}
-							/>
-						))}
-					</div>
-				) : (
-					<div></div>
-				)}
 				<Modal show={showModal}>
 					<Modal.Header closeButton onHide={() => setShowModal(false)}>
 						<Modal.Header className="channel-modal modal-header">
