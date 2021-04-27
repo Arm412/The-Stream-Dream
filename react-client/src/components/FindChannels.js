@@ -13,6 +13,7 @@ const FindChannels = (props) => {
 	const channelList = useRef();
 	const chosenChannel = useRef('');
 	const invalid = useRef(false);
+	const noResults = useRef(false);
 
 	const queryChannels = () => {
 		// Call the find channel backend api endpoint to query the twitch API
@@ -22,6 +23,12 @@ const FindChannels = (props) => {
 			})
 			.then((jsondata) => {
 				channelArray.current = JSON.parse(jsondata.data).data;
+
+				//Check if there were results
+				if (channelArray.current.length === 0) {
+					noResults.current = true;
+				}
+
 				setLoading(false);
 			})
 			.catch((message) => {
@@ -114,6 +121,9 @@ const FindChannels = (props) => {
 							{invalid.current === true ? (
 								<p className="red center-text">Invalid Input</p>
 							) : null}
+							{noResults.current === true ? (
+								<p className="white center-text">No results returned</p>
+							) : null}
 						</form>
 						{!loading && channelArray.current.length !== 0 ? (
 							<div
@@ -137,6 +147,7 @@ const FindChannels = (props) => {
 						className="find-channel-btn text-color primary-bg"
 						onClick={() => {
 							invalid.current = false;
+							noResults.current = false;
 							setLoading(true);
 						}}
 						disabled={channelName === ''}

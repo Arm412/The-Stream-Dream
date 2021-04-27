@@ -83,7 +83,7 @@ const MediaInfo = (props) => {
 					<div className="flex-container desc-height">
 						<p className="header-color">Views: &nbsp; </p>
 						<p className="center-text white">{props.media['view_count']}</p>
-						<p className="header-color">&nbsp; Duration: &nbsp; </p>
+						<p className="header-color">&nbsp; Length: &nbsp; </p>
 						<p className="center-text white">
 							{getDurationString(props.media['duration'])}
 						</p>
