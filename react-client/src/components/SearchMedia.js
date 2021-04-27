@@ -140,11 +140,11 @@ const SearchMedia = (props) => {
 						}
 					/>
 				)}
-				<div className="dark-bg dark-div">
+				<div className="auto-margin-container">
 					{mediaState === 'input' || mediaState === 'loading' ? (
 						<>
 							<div>
-								<p className="center-text">
+								<p className="center-text white-border dark-bg margin-text">
 									Every Twitch streamer has the ability to save their streams
 									publicly on their profile for others to view. They can archive
 									their entire stream, or they can save shorter videos. Viewers
@@ -156,20 +156,20 @@ const SearchMedia = (props) => {
 							</div>
 							<div className="media-form-container flex-container">
 								<SelectForm
-									formClass="media-select-form"
+									formClass="media-select-form flex-box-1"
 									headerText="Select type of media"
 									setFunction={setMediaOption}
 									parentVariable={mediaOption}
 									selectOptions={['Videos', 'Clips']}
 								/>
 								<SelectForm
-									formClass="media-select-form"
+									formClass="media-select-form flex-box-1"
 									headerText={'Filter the ' + mediaOption + ' by'}
 									setFunction={setSearchBy}
 									parentVariable={searchBy}
 									selectOptions={['Game', 'User']}
 								/>
-								<form className="media-input-form">
+								<form className="media-input-form flex-box-1">
 									<h2 className="center-text">
 										Input the name of the {searchBy}
 									</h2>

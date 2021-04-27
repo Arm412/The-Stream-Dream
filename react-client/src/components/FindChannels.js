@@ -40,8 +40,54 @@ const FindChannels = (props) => {
 	};
 
 	useEffect(() => {
+		if (document.body.clientWidth < 1200) {
+			if (
+				document
+					.getElementById('marginDiv')
+					.classList.contains('sm-margin-container')
+			) {
+				document
+					.getElementById('marginDiv')
+					.classList.remove('sm-margin-container');
+				document
+					.getElementById('marginDiv')
+					.classList.add('auto-margin-container');
+			} else {
+				if (
+					document
+						.getElementById('marginDiv')
+						.classList.contains('auto-margin-container')
+				) {
+					document
+						.getElementById('marginDiv')
+						.classList.remove('auto-margin-container');
+					document
+						.getElementById('marginDiv')
+						.classList.add('sm-margin-container');
+				}
+			}
+		}
+	}, []);
+
+	useEffect(() => {
 		if (loading) {
 			queryChannels(channelName);
+		}
+
+		if (!loading && channelArray.current.length !== 0) {
+			// Add flex class
+			if (
+				document
+					.getElementById('channelResultFlex')
+					.classList.contains('no-width')
+			) {
+				document
+					.getElementById('channelResultFlex')
+					.classList.remove('no-width');
+				document
+					.getElementById('channelResultFlex')
+					.classList.add('show-channel');
+			}
 		}
 	}, [loading]);
 
@@ -50,48 +96,53 @@ const FindChannels = (props) => {
 			<div className="container-overlay"></div>
 			<div className="pop-out">
 				<Header title="Find a Twitch Channel" />
-				<div className="dark-bg dark-div">
-					<p className="center-text">
-						Search for Twitch streamers who have actively been streaming. Users
-						who have not streamed within the past 6 months will not be found.
-					</p>
-					<div className="input-div pop-out">
-						<form>
+				<p className="center-text white-border dark-bg margin-text">
+					Search for Twitch streamers who have actively been streaming. Users
+					who have not streamed within the past 6 months will not be found.
+				</p>
+				<div id="marginDiv" className="sm-margin-container">
+					<div className="channel-container flex-container flex-wrap">
+						<form className="media-input-form flex-box-1 flex-animate-item">
+							<h2 className="center-text">Input the name of the channel</h2>
 							<input
 								value={channelName}
-								className="form-control form-control-lg"
+								className="form-control form-control-lg media-input"
 								id="channelName"
-								placeholder="Input Twitch Channel Name"
+								placeholder="Input Twitch Channel"
 								onChange={(e) => setChannelName(e.target.value)}
 							/>
+							{invalid.current === true ? (
+								<p className="red center-text">Invalid Input</p>
+							) : null}
 						</form>
-						<button
-							className="find-channel-btn text-color primary-bg"
-							onClick={() => {
-								invalid.current = false;
-								setLoading(true);
-							}}
-							disabled={channelName === ''}
-						>
-							{!loading ? 'Search' : <div className="btn-loader"></div>}
-						</button>
-						{invalid.current === true ? (
-							<p className="red">Invalid Input</p>
+						{!loading && channelArray.current.length !== 0 ? (
+							<div
+								id="channelResultFlex"
+								className="flex-animate-item no-width flex-box-1"
+							>
+								<div className="channel-result-div" ref={channelList}>
+									{channelArray.current.map((channel) => (
+										<ChannelItem
+											key={channel.display_name}
+											displayName={channel.display_name}
+											profileImg={channel.thumbnail_url}
+											onClick={() => setActiveChannel(channel)}
+										/>
+									))}
+								</div>
+							</div>
 						) : null}
 					</div>
-
-					{!loading && channelArray.current.length !== 0 ? (
-						<div className="channel-container" ref={channelList}>
-							{channelArray.current.map((channel) => (
-								<ChannelItem
-									key={channel.display_name}
-									displayName={channel.display_name}
-									profileImg={channel.thumbnail_url}
-									onClick={() => setActiveChannel(channel)}
-								/>
-							))}
-						</div>
-					) : null}
+					<button
+						className="find-channel-btn text-color primary-bg"
+						onClick={() => {
+							invalid.current = false;
+							setLoading(true);
+						}}
+						disabled={channelName === ''}
+					>
+						{!loading ? 'Search' : <div className="btn-loader"></div>}
+					</button>
 				</div>
 				<Modal show={showModal}>
 					<Modal.Header closeButton onHide={() => setShowModal(false)}>

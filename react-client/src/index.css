@@ -59,6 +59,10 @@ p {
 	color: var(--text-color);
 }
 
+.white-border {
+	border: solid var(--text-color) 1px;
+}
+
 .header-color {
 	color: var(--header-color);
 }
@@ -75,11 +79,24 @@ p {
 	background-color: rgba(12, 12, 12, 0.6);
 }
 
-.dark-div {
+.sm-margin-container {
 	position: relative;
-	padding: 25px;
-	margin: 5px;
+	margin: 0 15%;
 	height: 100%;
+}
+
+.auto-margin-container {
+	position: relative;
+	margin: 0 auto;
+	height: 100%;
+}
+
+.margin-text {
+	box-sizing: content-box;
+	margin: 0 auto;
+	padding: 1%;
+	min-width: 350px;
+	max-width: 80vw;
 }
 
 .home-btn {
@@ -402,6 +419,7 @@ button:hover {
 	background-attachment: fixed;
 	background-position: center;
 	height: 100vh;
+	overflow: hidden;
 }
 
 .container-overlay {
@@ -421,26 +439,32 @@ button:hover {
 	z-index: 2;
 }
 
-.input-div {
-	width: 400px;
-	height: 50px;
-	margin-left: calc(50% - 200px);
-	margin-top: 2%;
-}
-
-.input-div form {
-	width: 300px;
-	height: auto;
-	float: left;
-}
-
 .channel-container {
-	width: 450px;
-	height: 500px;
-	margin-left: calc(50% - 225px);
+	height: auto;
 	margin-top: 2%;
+	padding: 2px;
+}
+
+.channel-result-div {
+	max-width: 400px;
+	min-height: 300px;
+	max-height: 300px;
 	overflow-y: scroll;
 	background-color: rgba(12, 12, 12, 0.6);
+	overflow-x: hidden;
+	border: solid var(--text-color) 1px;
+}
+
+.no-width {
+	min-width: 0;
+	max-width: 0;
+	overflow: hidden;
+}
+
+.show-channel {
+	min-width: 370px;
+	max-width: 370px;
+	margin: 0 auto 5px auto;
 }
 
 .search-img {
@@ -451,11 +475,13 @@ button:hover {
 
 .find-channel-btn {
 	padding: 0.75rem 1rem;
-	float: right;
+	margin: 5px 0 0 50%;
+	width: auto;
+	transform: translateX(-50%);
 }
 
 .channel-holder {
-	overflow: auto;
+	overflow-x: hidden;
 	display: flex;
 	margin: 5px 0;
 }
@@ -465,13 +491,13 @@ button:hover {
 	cursor: pointer;
 }
 
-.channel-holder :is(.pad-flex, .channel-img) {
+.channel-holder :is(.channel-img) {
 	flex: 1;
 }
 
 .channel-name {
 	padding-top: 35px;
-	flex: 2;
+	flex: 3;
 }
 
 .center-text {
@@ -560,15 +586,13 @@ button:hover {
 .media-input-form {
 	box-sizing: content-box;
 	border-radius: 2%;
-	width: 100%;
-	min-width: 215px;
+	min-width: 320px;
 	max-width: 350px;
 	min-height: 200px;
 	max-height: 200px;
 	padding: 20px 20px;
-	margin-bottom: 5px;
+	margin: 0 auto 5px auto;
 	background-color: rgba(12, 12, 12, 0.9);
-	flex: 1;
 	border: solid var(--text-color) 1px;
 }
 
@@ -634,14 +658,21 @@ button:hover {
 
 .media-details {
 	position: relative;
+	min-width: 215px;
 	max-width: 750px;
 	height: 390px;
 	margin: 0 auto;
 	border: solid var(--text-color) 1px;
 	background-color: rgba(12, 12, 12, 0.8);
-	flex: 0;
 	padding: 20px;
 	flex-direction: column;
+	overflow: hidden;
+}
+
+.show-media-info {
+	min-width: 370px;
+	max-width: 750px;
+	margin: 0 auto 5px auto;
 	overflow: hidden;
 }
 
