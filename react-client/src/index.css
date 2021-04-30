@@ -607,15 +607,36 @@ button:hover {
 	margin-bottom: 4%;
 }
 
+.media-data-wrapper {
+	min-width: 350px;
+	max-width: 750px;
+	max-height: 390px;
+	min-height: 390px;
+	border: solid var(--text-color) 1px;
+	margin: 0 auto 5px auto;
+	background-color: rgba(12, 12, 12, 0.8);
+	position: relative;
+}
+
 .media-data-loaded-div {
 	margin: 0 auto;
 	min-width: 350px;
 	max-width: 750px;
-	max-height: 390px;
-	border: solid var(--text-color) 1px;
-	background-color: rgba(12, 12, 12, 0.8);
+	max-height: 360px;
 	flex: 1;
 	transition: flex 1s;
+}
+
+.page-arrow-wrapper {
+	position: absolute;
+	bottom: 0;
+	width: 100%;
+	height: 30px;
+}
+
+.page-arrow-wrapper > button {
+	border-left: black solid 1px;
+	border-right: black solid 1px;
 }
 
 .media-select-dropdown {
