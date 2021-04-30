@@ -72,7 +72,6 @@ const SearchMedia = (props) => {
 		let mediaData;
 		noData.current = false;
 		doesntExist.current = false;
-		console.log(mediaArray.current);
 		// Call query function and update the state based on the returned info
 		if (mediaState === 'loading') {
 			doesntExist.current = false;
