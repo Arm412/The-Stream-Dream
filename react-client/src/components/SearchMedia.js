@@ -5,6 +5,7 @@ import SelectForm from './SelectForm';
 import MediaResult from './MediaResult';
 import BasicBtn from './BasicBtn';
 import MediaInfo from './MediaInfo';
+import PageArrows from './PageArrows';
 
 axios.defaults.withCredentials = true;
 
@@ -14,6 +15,7 @@ const SearchMedia = (props) => {
 	const [searchBy, setSearchBy] = useState('game');
 	const [mediaState, setMediaState] = useState('input');
 	const [showActive, setShowActive] = useState('');
+	const [page, setPage] = useState(0);
 	const inputElement = useRef();
 	const mediaArray = useRef();
 	const noData = useRef(false);
@@ -61,13 +63,16 @@ const SearchMedia = (props) => {
 	};
 
 	useEffect(() => {
-		inputElement.current.style.backgroundColor = 'white';
+		if (inputElement.current) {
+			inputElement.current.style.backgroundColor = 'white';
+		}
 	}, [mediaOption, searchBy]);
 
 	useEffect(() => {
 		let mediaData;
 		noData.current = false;
 		doesntExist.current = false;
+		console.log(mediaArray.current);
 		// Call query function and update the state based on the returned info
 		if (mediaState === 'loading') {
 			doesntExist.current = false;
@@ -75,13 +80,14 @@ const SearchMedia = (props) => {
 			queryTwitch(mediaOption, searchBy, identifier)
 				.then((data) => {
 					mediaData = data;
+
 					mediaArray.current = mediaData;
 
 					if (process.env.REACT_APP_BUILD_ENV === 'DEBUG') {
 						console.log(mediaData);
 					}
 
-					if (mediaArray.current.length === 0) {
+					if (mediaArray.current[page].length === 0) {
 						console.log('User found but no media was returned');
 						noData.current = true;
 						// show no media text
@@ -101,6 +107,10 @@ const SearchMedia = (props) => {
 		// Hide the media data container when in different state
 		if (showActive !== '' && mediaState !== 'display') {
 			setShowActive('');
+		}
+
+		if (mediaState === 'input') {
+			setPage(0);
 		}
 	}, [mediaState]);
 
@@ -199,47 +209,62 @@ const SearchMedia = (props) => {
 					) : (
 						<>
 							<div className="flex-container flex-wrap auto-margin no-overflow">
-								<div className="media-data-loaded-div flex-animate-item flex-box-1">
-									<MediaResult
-										className="media-header"
-										streamer="Broadcaster"
-										title="Title"
-										views="Views"
-									/>
-									<div className="media-results-div">
-										{mediaOption === 'videos'
-											? mediaArray.current.map((media) => (
-													<MediaResult
-														onclick={() => {
-															media['thumbnail_url'] = updateImages(
-																media['thumbnail_url']
-															);
-															activeMedia.current = media;
-															setShowActive(media['id']);
-														}}
-														className="media-clip-result"
-														mediaLink={media.url}
-														streamer={media.user_name}
-														title={media.title}
-														views={media.view_count}
-														key={media.id}
-													/>
-											  ))
-											: mediaArray.current.map((media) => (
-													<MediaResult
-														onclick={() => {
-															activeMedia.current = media;
-															setShowActive(media['id']);
-														}}
-														className="media-clip-result"
-														mediaLink={media.url}
-														streamer={media.broadcaster_name}
-														title={media.title}
-														views={media.view_count}
-														key={media.id}
-													/>
-											  ))}
+								<div className="media-data-wrapper flex-animate-item flex-box-1">
+									<div className="media-data-loaded-div">
+										<MediaResult
+											className="media-header"
+											streamer="Broadcaster"
+											title="Title"
+											views="Views"
+										/>
+										<div className="media-results-div">
+											{mediaOption === 'videos'
+												? mediaArray.current[page].map((media) => (
+														<MediaResult
+															onclick={() => {
+																media['thumbnail_url'] = updateImages(
+																	media['thumbnail_url']
+																);
+																activeMedia.current = media;
+																setShowActive(media['id']);
+															}}
+															className="media-clip-result"
+															mediaLink={media.url}
+															streamer={media.user_name}
+															title={media.title}
+															views={media.view_count}
+															key={media.id}
+														/>
+												  ))
+												: mediaArray.current[page].map((media) => (
+														<MediaResult
+															onclick={() => {
+																activeMedia.current = media;
+																setShowActive(media['id']);
+															}}
+															className="media-clip-result"
+															mediaLink={media.url}
+															streamer={media.broadcaster_name}
+															title={media.title}
+															views={media.view_count}
+															key={media.id}
+														/>
+												  ))}
+										</div>
 									</div>
+									{mediaArray.current[page + 1] === undefined &&
+									page === 0 ? null : (
+										<PageArrows
+											pageNum={page}
+											previousPage={() => {
+												setPage(page - 1);
+											}}
+											nextPage={() => {
+												setPage(page + 1);
+											}}
+											hasNextPage={mediaArray.current[page + 1] !== undefined}
+										/>
+									)}
 								</div>
 								{showActive ? (
 									<MediaInfo
