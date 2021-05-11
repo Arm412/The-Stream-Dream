@@ -13,7 +13,7 @@ const HomeCard = (props) => {
 				</div>
 				<div className="card-header-btn">
 					<Link to={props.goToLink}>
-						<div className="btn-div primary-bg text-color">
+						<div id={props.BtnId} className="btn-div primary-bg text-color">
 							<span>{props.buttonText}</span>
 						</div>
 					</Link>

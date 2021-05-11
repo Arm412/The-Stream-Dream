@@ -48,14 +48,20 @@ const MediaInfo = (props) => {
 
 				<section className="info-desc-div">
 					<div className="flex-container desc-height">
-						<p className="header-color">Title: &nbsp; </p>
-						<p className="desc-text">{props.media['title']}</p>
+						<p name="title" className="header-color">
+							Title: &nbsp;{' '}
+						</p>
+						<p name="title-text" className="desc-text">
+							{props.media['title']}
+						</p>
 					</div>
 					<div className="flex-container desc-height">
 						{props.mediaType === 'videos' ? (
 							<>
-								<p className="header-color">Description: &nbsp; </p>
-								<p className="desc-text">
+								<p name="description" className="header-color">
+									Description: &nbsp;{' '}
+								</p>
+								<p name="description-text" className="desc-text">
 									{props.media['description'] !== ''
 										? props.media['description']
 										: 'No description provided'}
@@ -63,8 +69,10 @@ const MediaInfo = (props) => {
 							</>
 						) : (
 							<>
-								<p className="header-color">Clip ID: &nbsp; </p>
-								<p className="desc-text">
+								<p name="clip-id" className="header-color">
+									Clip ID: &nbsp;{' '}
+								</p>
+								<p name="clip-id-text" className="desc-text">
 									{props.media['id'] !== ''
 										? props.media['id']
 										: 'No ID provided'}
@@ -73,8 +81,10 @@ const MediaInfo = (props) => {
 						)}
 					</div>
 					<div className="flex-container">
-						<p className="header-color">Twitch User: &nbsp; </p>
-						<p className="center-text white">
+						<p name="twitch-user" className="header-color">
+							Twitch User: &nbsp;{' '}
+						</p>
+						<p name="twitch-user-text" className="center-text white">
 							{props.mediaType === 'videos'
 								? props.media['user_name']
 								: props.media['broadcaster_name']}
@@ -92,6 +102,7 @@ const MediaInfo = (props) => {
 					<BasicBtn
 						btnClass="info-link-div"
 						btnText="View"
+						id="mediaGoToBtn"
 						onClick={() => {
 							window.open(props.media['url'], '_blank');
 						}}

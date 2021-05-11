@@ -170,6 +170,7 @@ const SearchMedia = (props) => {
 									setFunction={setMediaOption}
 									parentVariable={mediaOption}
 									selectOptions={['Videos', 'Clips']}
+									selectorId="mediaOption"
 								/>
 								<SelectForm
 									formClass="media-select-form flex-box-1"
@@ -177,6 +178,7 @@ const SearchMedia = (props) => {
 									setFunction={setSearchBy}
 									parentVariable={searchBy}
 									selectOptions={['Game', 'User']}
+									selectorId="searchBy"
 								/>
 								<form className="media-input-form flex-box-1">
 									<h2 className="center-text">
@@ -191,14 +193,15 @@ const SearchMedia = (props) => {
 											inputElement.current.style.backgroundColor = 'white';
 											setIdentifier(e.target.value);
 										}}
+										id="mediaUserInput"
 									/>
 									{noData.current ? (
-										<p className="center-text caution">
+										<p id="noMediaText" className="center-text caution">
 											This {searchBy} has no {mediaOption}
 										</p>
 									) : null}
 									{doesntExist.current ? (
-										<p className="center-text red">
+										<p id="invalidText" className="center-text red">
 											This {searchBy} does not exist
 										</p>
 									) : null}
@@ -208,7 +211,10 @@ const SearchMedia = (props) => {
 					) : (
 						<>
 							<div className="flex-container flex-wrap auto-margin no-overflow">
-								<div className="media-data-wrapper flex-animate-item flex-box-1">
+								<div
+									id="mediaResultContainer"
+									className="media-data-wrapper flex-animate-item flex-box-1"
+								>
 									<div className="media-data-loaded-div">
 										<MediaResult
 											className="media-header"

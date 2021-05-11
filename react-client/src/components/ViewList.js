@@ -16,7 +16,7 @@ const ViewList = (props) => {
 						{props.gameData == null ? (
 							<div>No Source</div>
 						) : (
-							<p>Rank: {props.rank}</p>
+							<p id={'rank' + props.rank}>Rank: {props.rank}</p>
 						)}
 					</div>
 					<div>
