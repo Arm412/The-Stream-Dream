@@ -30,18 +30,21 @@ const Home = (props) => {
 						cardBody={SearchChannelBody}
 						goToLink="/getUser"
 						buttonText="Search Twitch Channels"
+						BtnId="getUserBtn"
 					/>
 					<HomeCard
 						cardHeader="View Top Twitch Games"
 						cardBody={TopGamesCardBody}
 						goToLink="/getGames"
 						buttonText="View Top Games"
+						BtnId="topGamesBtn"
 					/>
 					<HomeCard
 						cardHeader="Search for Stream Clips"
 						cardBody={SearchMediaBody}
 						goToLink="/getMedia"
 						buttonText="Search for Twitch Videos/Clips"
+						BtnId="getMediaBtn"
 					/>
 				</div>
 			</div>

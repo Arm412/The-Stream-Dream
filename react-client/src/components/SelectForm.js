@@ -9,9 +9,10 @@ const SelectForm = (props) => {
 					className="media-select-dropdown primary-bg text-color"
 					onChange={(e) => props.setFunction(e.target.value)}
 					value={props.parentVariable}
+					id={props.selectorId}
 				>
 					{props.selectOptions.map((options) => (
-						<option key={options} value={options.toLowerCase()}>
+						<option key={options} name={options} value={options.toLowerCase()}>
 							{options}
 						</option>
 					))}
